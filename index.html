@@ -528,7 +528,10 @@ footer a:hover{color:var(--gold);}
       <div id="formFields" class="fields-grid"></div>
       <div class="alert err" id="alert2" style="margin-top:16px;"></div>
       <br>
-      <button class="btn" onclick="irAPreview()">Ver vista previa del documento →</button>
+      <!-- CTA PRINCIPAL: pago directo (sin preview) -->
+      <button class="btn gold" onclick="irAlPagoDirecto()" id="btnPagoDirecto">Generar y descargar documento →</button>
+      <!-- CTA SECUNDARIO: preview opcional -->
+      <button class="btn ghost" onclick="irAPreview()" id="btnVerPreview" style="margin-top:10px;font-size:13px;opacity:0.8;">Ver vista previa gratis antes de pagar</button>
     </div>
 
     <!-- LOADING PREVIEW -->
@@ -1814,6 +1817,35 @@ function volverDatosDesdePreview() {
   G.previewId = null;
   sessionStorage.removeItem('legalai_previewId');
   showCard(2);
+}
+
+// ── PAGO DIRECTO SIN PREVIEW ────────────────────────────────────────
+function irAlPagoDirecto() {
+  hideErr('alert2');
+  // Validar campos requeridos (igual que irAPreview)
+  for (const c of (G.campos || []).filter(x => x.requerido)) {
+    const el = document.getElementById(c.id);
+    if (el && !el.value.trim()) {
+      showErr('alert2', `El campo "${c.label}" es obligatorio.`);
+      el.focus();
+      return;
+    }
+  }
+  // Recopilar datos (igual que irAPreview)
+  const datos = { tipo: G.tipo, pais: G.pais, provincia: G.provincia };
+  (G.campos || []).forEach(c => { const el = document.getElementById(c.id); if (el) datos[c.id] = el.value; });
+  const meta = {
+    titulo: G.form?.titulo || G.tipo, categoria: G.categoria, precio_usd: G.precio_usd,
+    upgrade_porcentaje: G.upgrade_porcentaje, requiere_advertencia_legal: G.requiere_advertencia_legal,
+  };
+  sessionStorage.setItem('legalai_datos',  JSON.stringify(datos));
+  sessionStorage.setItem('legalai_titulo', G.form?.titulo || G.tipo);
+  sessionStorage.setItem('legalai_meta',   JSON.stringify(meta));
+  // Sin previewId — el worker usará datosDoc directamente en /generar
+  G.previewId = null;
+  sessionStorage.removeItem('legalai_previewId');
+  track('pago_directo', { doc_tipo: G.form?.titulo || G.tipo });
+  irAlPago();
 }
 
 function irAlPagoDesdePreview() {

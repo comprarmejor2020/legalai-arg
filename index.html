@@ -528,10 +528,10 @@ footer a:hover{color:var(--gold);}
       <div id="formFields" class="fields-grid"></div>
       <div class="alert err" id="alert2" style="margin-top:16px;"></div>
       <br>
-      <!-- CTA PRINCIPAL: pago directo (sin preview) -->
-      <button class="btn gold" onclick="irAlPagoDirecto()" id="btnPagoDirecto">Generar y descargar documento →</button>
-      <!-- CTA SECUNDARIO: preview opcional -->
-      <button class="btn ghost" onclick="irAPreview()" id="btnVerPreview" style="margin-top:10px;font-size:13px;opacity:0.8;">Ver vista previa gratis antes de pagar</button>
+      <!-- CTA 1: PAGO DIRECTO (principal) -->
+      <button class="btn gold" onclick="irAlPagoDirecto()" style="margin-bottom:10px;">Generar mi contrato ahora →</button>
+      <!-- CTA 2: PREVIEW OPCIONAL (secundario) -->
+      <button class="btn ghost" onclick="irAPreview()" style="font-size:13px;opacity:0.75;">Ver vista previa antes de pagar</button>
     </div>
 
     <!-- LOADING PREVIEW -->
@@ -1701,16 +1701,43 @@ async function irAPreview() {
     document.getElementById('previewContainer').scrollTop = 0;
     track('preview_ok', { doc_tipo: G.form?.titulo || G.tipo });
   } catch(err) {
+    // FALLBACK: si el preview falla, el usuario avanza al pago de todas formas
     document.getElementById('loadingPreview').classList.remove('visible');
-    document.getElementById('card2').classList.add('visible');
-    let msg = err.message || 'Error desconocido';
-    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
-      msg = 'La generación tardó demasiado. Intentá de nuevo.';
-    } else if (msg.includes('Unexpected token') || msg.includes('JSON') || msg.includes('fetch')) {
-      msg = 'Error de conexión con el servidor. Verificá tu internet e intentá de nuevo.';
-    }
-    showErr('alert2', '⚠️ ' + msg);
+    G.previewId = null;
+    sessionStorage.removeItem('legalai_previewId');
+    track('preview_fallback', { doc_tipo: G.form?.titulo || G.tipo, error: err.message });
+    // Mostrar aviso NO bloqueante y continuar al pago
+    showCard('2');
+    showErr('alert2', '⚠️ No pudimos generar la vista previa, pero podés continuar al pago y tu documento se generará correctamente.');
+    // Esperar 2s y avanzar automáticamente
+    setTimeout(() => { hideErr('alert2'); irAlPago(); }, 3500);
   }
+}
+
+// ── PAGO DIRECTO SIN PREVIEW ────────────────────────────────────────
+function irAlPagoDirecto() {
+  hideErr('alert2');
+  for (const c of (G.campos || []).filter(x => x.requerido)) {
+    const el = document.getElementById(c.id);
+    if (el && !el.value.trim()) {
+      showErr('alert2', `El campo "${c.label}" es obligatorio.`);
+      el.focus();
+      return;
+    }
+  }
+  const datos = { tipo: G.tipo, pais: G.pais, provincia: G.provincia };
+  (G.campos || []).forEach(c => { const el = document.getElementById(c.id); if (el) datos[c.id] = el.value; });
+  const meta = {
+    titulo: G.form?.titulo || G.tipo, categoria: G.categoria, precio_usd: G.precio_usd,
+    upgrade_porcentaje: G.upgrade_porcentaje, requiere_advertencia_legal: G.requiere_advertencia_legal,
+  };
+  sessionStorage.setItem('legalai_datos',  JSON.stringify(datos));
+  sessionStorage.setItem('legalai_titulo', G.form?.titulo || G.tipo);
+  sessionStorage.setItem('legalai_meta',   JSON.stringify(meta));
+  G.previewId = null;
+  sessionStorage.removeItem('legalai_previewId');
+  track('pago_directo', { doc_tipo: G.form?.titulo || G.tipo });
+  irAlPago();
 }
 
 function renderizarPreviewCanvas(texto, titulo) {
@@ -1817,35 +1844,6 @@ function volverDatosDesdePreview() {
   G.previewId = null;
   sessionStorage.removeItem('legalai_previewId');
   showCard(2);
-}
-
-// ── PAGO DIRECTO SIN PREVIEW ────────────────────────────────────────
-function irAlPagoDirecto() {
-  hideErr('alert2');
-  // Validar campos requeridos (igual que irAPreview)
-  for (const c of (G.campos || []).filter(x => x.requerido)) {
-    const el = document.getElementById(c.id);
-    if (el && !el.value.trim()) {
-      showErr('alert2', `El campo "${c.label}" es obligatorio.`);
-      el.focus();
-      return;
-    }
-  }
-  // Recopilar datos (igual que irAPreview)
-  const datos = { tipo: G.tipo, pais: G.pais, provincia: G.provincia };
-  (G.campos || []).forEach(c => { const el = document.getElementById(c.id); if (el) datos[c.id] = el.value; });
-  const meta = {
-    titulo: G.form?.titulo || G.tipo, categoria: G.categoria, precio_usd: G.precio_usd,
-    upgrade_porcentaje: G.upgrade_porcentaje, requiere_advertencia_legal: G.requiere_advertencia_legal,
-  };
-  sessionStorage.setItem('legalai_datos',  JSON.stringify(datos));
-  sessionStorage.setItem('legalai_titulo', G.form?.titulo || G.tipo);
-  sessionStorage.setItem('legalai_meta',   JSON.stringify(meta));
-  // Sin previewId — el worker usará datosDoc directamente en /generar
-  G.previewId = null;
-  sessionStorage.removeItem('legalai_previewId');
-  track('pago_directo', { doc_tipo: G.form?.titulo || G.tipo });
-  irAlPago();
 }
 
 function irAlPagoDesdePreview() {

@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-05T12:05:37.042Z",
+  "fecha": "2026-05-06T12:07:05.979Z",
   "periodo_48h": {
-    "clics": 14,
+    "clics": 16,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 14,
+        "clics": 16,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -95,14 +95,14 @@
     {
       "key": "page_view",
       "label": "Visita planes",
-      "count": 1,
+      "count": 0,
       "drop_pct": 0
     },
     {
       "key": "click_plan",
       "label": "Click plan",
       "count": 0,
-      "drop_pct": 100
+      "drop_pct": 0
     },
     {
       "key": "email_confirm",
@@ -131,7 +131,7 @@
   "diagnostico": {
     "problemas": [
       "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago",
-      "Fuente \"directo\": 14 clics y 0 ventas → landing o segmentación"
+      "Fuente \"directo\": 16 clics y 0 ventas → landing o segmentación"
     ],
     "oportunidades": [],
     "estado": "PROBLEMA"

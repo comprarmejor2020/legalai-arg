@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-05-06T17:47:24.532Z",
+  "fecha": "2026-05-06T18:45:13.200Z",
   "periodo_48h": {
     "clics": 27,
     "ventas": 0,
@@ -49,24 +49,24 @@
     ]
   },
   "embudo_eventos": {
+    "page_view": 19,
     "generar_preview": 3,
-    "page_view": 18,
     "inicio_pago": 1,
     "cta_generador": 1
   },
-  "total_eventos": 23,
+  "total_eventos": 24,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 18,
+      "count": 19,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
       "count": 1,
-      "drop_pct": 94
+      "drop_pct": 95
     },
     {
       "key": "generar_preview",

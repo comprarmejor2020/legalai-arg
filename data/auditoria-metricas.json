@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-06T18:45:13.200Z",
+  "fecha": "2026-05-07T12:13:26.719Z",
   "periodo_48h": {
-    "clics": 27,
+    "clics": 19,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 27,
+        "clics": 19,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,62 +17,45 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 52,
-    "ventas": 1,
-    "tasa_conv": "1.9%",
-    "total_ars": 15900,
+    "clics": 45,
+    "ventas": 0,
+    "tasa_conv": "0.0%",
+    "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 52,
-        "ventas": 1,
-        "tasa_conv": "1.9%",
-        "monto_ars": 15900
+        "clics": 45,
+        "ventas": 0,
+        "tasa_conv": "0.0%",
+        "monto_ars": 0
       }
     },
-    "top_documentos": [
-      {
-        "titulo": "Contrato de Alquiler de Vivienda Residencial",
-        "count": 1
-      }
-    ],
-    "ultimas_conversiones": [
-      {
-        "ts_ar": "29/4/2026, 04:04:23",
-        "tipo": "doc",
-        "titulo": "Contrato de Alquiler de Vivienda Residencial",
-        "monto": 15900,
-        "utm_src": "directo",
-        "utm_cmp": "—",
-        "device": "Mobile",
-        "email": "soniaestrada963@gmail.com"
-      }
-    ]
+    "top_documentos": [],
+    "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 19,
+    "page_view": 18,
     "generar_preview": 3,
-    "inicio_pago": 1,
-    "cta_generador": 1
+    "inicio_pago": 1
   },
-  "total_eventos": 24,
+  "total_eventos": 22,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 19,
+      "count": 18,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
-      "count": 1,
-      "drop_pct": 95
+      "count": 0,
+      "drop_pct": 100
     },
     {
       "key": "generar_preview",
       "label": "Genera preview",
       "count": 3,
-      "drop_pct": -200
+      "drop_pct": 0
     },
     {
       "key": "preview_ok",
@@ -126,15 +109,14 @@
     }
   ],
   "cuello_botella": {
-    "en": "Preview OK",
+    "en": "Click generador",
     "drop": "100%",
-    "tipo": "preview_ok"
+    "tipo": "cta_generador"
   },
   "diagnostico": {
     "problemas": [
-      "Alto tráfico sin conversiones → problema en checkout o precio",
       "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago",
-      "Fuente \"directo\": 27 clics y 0 ventas → landing o segmentación"
+      "Fuente \"directo\": 19 clics y 0 ventas → landing o segmentación"
     ],
     "oportunidades": [],
     "estado": "PROBLEMA"

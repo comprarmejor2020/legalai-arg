@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-07T12:13:26.719Z",
+  "fecha": "2026-05-07T12:59:18.061Z",
   "periodo_48h": {
-    "clics": 19,
+    "clics": 21,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 19,
+        "clics": 21,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 45,
+    "clics": 47,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 45,
+        "clics": 47,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,16 +33,16 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 18,
-    "generar_preview": 3,
+    "generar_preview": 4,
+    "page_view": 19,
     "inicio_pago": 1
   },
-  "total_eventos": 22,
+  "total_eventos": 24,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 18,
+      "count": 19,
       "drop_pct": 0
     },
     {
@@ -54,7 +54,7 @@
     {
       "key": "generar_preview",
       "label": "Genera preview",
-      "count": 3,
+      "count": 4,
       "drop_pct": 0
     },
     {
@@ -115,8 +115,9 @@
   },
   "diagnostico": {
     "problemas": [
+      "Alto tráfico sin conversiones → problema en checkout o precio",
       "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago",
-      "Fuente \"directo\": 19 clics y 0 ventas → landing o segmentación"
+      "Fuente \"directo\": 21 clics y 0 ventas → landing o segmentación"
     ],
     "oportunidades": [],
     "estado": "PROBLEMA"

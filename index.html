@@ -10,8 +10,9 @@
   gtag('config', 'AW-18073890544');
 </script>
 <meta charset="UTF-8">
+<meta name="description" content="Generá contratos de alquiler, cartas documento, contratos freelance y más en 5 minutos. Adaptados a Argentina. Desde USD 6. Sin abogado. Descarga inmediata en PDF.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LegalAI Arg — Documentos Legales con IA</title>
+<title>Contratos y Documentos Legales Online Argentina | Listos en 5 min — LegalAI Arg</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -373,7 +374,8 @@ footer a:hover{color:var(--gold);}
 <!-- NAV -->
 <nav>
   <div class="nav-link active" onclick="showSec('inicio')">Inicio</div>
-  <div class="nav-link"        onclick="showSec('generador')">Generador</div>
+  <div class="nav-link"        onclick="trackCTA('nav_generador');showSec('generador');">Generador</div>
+  <div class="nav-link"        onclick="window.location.href='contrato-alquiler.html'">Contrato alquiler</div>
   <div class="nav-link"        onclick="window.location.href='planes.html'">Plan ilimitado</div>
   <div class="nav-link"        onclick="showSec('afiliados')">Afiliados</div>
   <div class="nav-link"        onclick="showSec('about')">Acerca de</div>
@@ -384,24 +386,27 @@ footer a:hover{color:var(--gold);}
 <div class="section visible" id="sec-inicio">
 
   <div class="hero">
-    <div class="hero-tag">// Powered by Claude AI · Anthropic</div>
-    <h1>Documentos legales<br>en <em>minutos</em>, no en días</h1>
-    <p>Describí qué documento necesitás. La inteligencia artificial entiende el contexto, genera el formulario exacto para ese documento, y te entrega el PDF listo para usar.</p>
+    <div class="hero-tag">Documentos legales · Argentina · Sin abogado · Sin esperas</div>
+    <h1>Contratos y documentos legales<br>listos para firmar en <em>5 minutos</em></h1>
+    <p>Completás un formulario guiado con tus datos reales, pagás y descargás el PDF. Adaptado a tu provincia y situación. Sin burocracia.</p>
     <div class="hero-badges">
-      <span class="badge green">✓ Legislación argentina</span>
-      <span class="badge green">✓ Adaptado a cualquier país</span>
-      <span class="badge gold">✓ IA generativa</span>
-      <span class="badge">Descarga inmediata</span>
-      <span class="badge">Sin registro</span>
+      <span class="badge green">✓ Contrato de alquiler</span>
+      <span class="badge green">✓ Carta documento</span>
+      <span class="badge green">✓ Contrato freelance</span>
+      <span class="badge">✓ +30 tipos de documentos</span>
+      <span class="badge">Sin registro · PDF inmediato</span>
     </div>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:620px;margin:0 auto;">
-      <button class="btn" style="flex:1;min-width:220px;max-width:280px;background:var(--gold);color:#0f1117;" onclick="showSec('generador')">
-        Generar mi documento →
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:640px;margin:0 auto 16px;">
+      <button class="btn gold" style="flex:1;min-width:200px;max-width:280px;font-weight:700;" onclick="trackCTA('hero_principal');showSec('generador');">
+        Ver mi documento ahora →
       </button>
-      <button class="btn" style="flex:1;min-width:220px;max-width:280px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);" onclick="showSec('afiliados','aff-form')">
-        ✦ Ser afiliado ✦
-      </button>
+      <a href="contrato-alquiler.html" class="btn" style="flex:1;min-width:200px;max-width:240px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);text-decoration:none;padding:15px;text-align:center;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.92rem;display:flex;align-items:center;justify-content:center;" onclick="trackCTA('hero_alquiler');">
+        Contrato de alquiler →
+      </a>
     </div>
+    <p style="margin:0;font-size:.76rem;color:var(--mist);font-family:'DM Mono',monospace;">
+      Desde <strong style="color:var(--ink);">USD 6</strong> · Pago único · Sin suscripción · +500 documentos generados
+    </p>
   </div>
 
   <div class="content-wrap">
@@ -432,8 +437,8 @@ footer a:hover{color:var(--gold);}
     </div>
 
     <div style="text-align:center;margin-top:48px;">
-      <button class="btn gold" style="max-width:280px;margin:0 auto;" onclick="showSec('generador')">
-        Empezar ahora →
+      <button class="btn gold" style="max-width:300px;margin:0 auto;font-weight:700;" onclick="trackCTA('how_cta');showSec('generador');">
+        Crear mi documento ahora →
       </button>
       <p style="margin-top:16px;font-size:.78rem;color:var(--mist);font-family:'DM Mono',monospace;">
         ¿Generás documentos seguido?
@@ -1210,6 +1215,18 @@ const _SESSION_ID = sessionStorage.getItem('legalai_sid') || (() => {
   sessionStorage.setItem('legalai_sid', sid);
   return sid;
 })();
+
+// ── trackCTA: wrapper para CTAs de landing ────────────────────────
+function trackCTA(boton) {
+  try { gtag('event', 'conversion', { 'send_to': 'AW-18073890544', 'value': 8, 'currency': 'USD' }); } catch(_) {}
+  try {
+    fetch(CONFIG.WORKER_URL + '/interaccion', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ boton, utm_src: sessionStorage.getItem('legalai_utm_source') || '', utm_cmp: sessionStorage.getItem('legalai_utm_campaign') || '', utm_med: sessionStorage.getItem('legalai_utm_medium') || '' })
+    }).catch(function(){});
+  } catch(_) {}
+  track('cta_generador');
+}
 
 function track(tipo, extra) {
   try {

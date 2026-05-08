@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contratos y Documentos Legales Online Argentina | Listos en 5 min — LegalAI Arg</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfdie1fHZUtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 /* ── THEMES ─────────────────────────────────────────────────────────────── */
 :root {
@@ -352,8 +352,28 @@ footer a:hover{color:var(--gold);}
   .aff-stats .aff-stat:last-child{grid-column:1/-1;}
   .aff-wrap{padding:0 16px 60px;}
 }
-    #previewCanvas { user-select:none; -webkit-user-select:none; }
+    #previewCanvas { user-select:none; -webkit-user-select:none; pointer-events:none; }
     #card25 { user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+    #previewContainer { position:relative; overflow:hidden; }
+    #previewFadeOverlay {
+      position:absolute; bottom:0; left:0; right:0;
+      height:55%; pointer-events:none; z-index:2;
+      background:linear-gradient(to bottom, transparent 0%, var(--cream,#f0ede6) 55%, var(--cream,#f0ede6) 100%);
+    }
+    #previewCTA {
+      position:absolute; bottom:0; left:0; right:0; z-index:3;
+      padding:20px 16px 24px; text-align:center;
+      background:transparent;
+    }
+    .btn-desbloquear {
+      display:inline-block; background:var(--gold,#c8a84b); color:#0f1117;
+      font-family:'DM Sans',sans-serif; font-weight:800; font-size:1rem;
+      padding:14px 36px; border-radius:9px; border:none; cursor:pointer;
+      box-shadow:0 4px 18px rgba(200,168,75,.35); letter-spacing:-.01em;
+      transition:opacity .15s, transform .12s;
+    }
+    .btn-desbloquear:hover { opacity:.88; transform:translateY(-1px); }
+    .preview-lock-msg { font-size:.78rem; color:var(--mist,#6b7580); margin-top:8px; font-family:'DM Mono',monospace; }
 </style>
 </head>
 <body>
@@ -386,12 +406,12 @@ footer a:hover{color:var(--gold);}
 <div class="section visible" id="sec-inicio">
 
   <div class="hero">
-    <div class="hero-tag">Contratos online · Argentina · Ley 27.551 · Sin abogado</div>
+    <div class="hero-tag">Contratos online · Argentina · Legislación vigente · Sin abogado</div>
     <h1>Generá tu contrato de alquiler<br>online en <em>5 minutos</em></h1>
     <p>Completás los datos, revisás el documento y descargás el PDF listo para firmar. Adaptado a tu provincia y a la legislación vigente.</p>
     <div class="hero-badges">
-      <span class="badge green">✓ Ley 27.551 vigente</span>
-      <span class="badge green">✓ Adaptado a tu provincia</span>
+      <span class="badge green">✓ Basado en legislación argentina</span>
+      <span class="badge green">✓ Orientado a tu provincia</span>
       <span class="badge green">✓ PDF listo para firmar</span>
       <span class="badge">✓ Pago seguro MercadoPago</span>
       <span class="badge">Sin registro · Descarga inmediata</span>
@@ -536,7 +556,7 @@ footer a:hover{color:var(--gold);}
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
         <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">🔒 Pago seguro MercadoPago</span>
         <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ PDF listo para firmar</span>
-        <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ Ley 27.551</span>
+        <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ Legislación vigente</span>
       </div>
       <p style="text-align:center;font-size:13px;color:var(--mist);margin:0 0 12px;line-height:1.5;">Tu contrato legal listo para usar en 5 minutos —<br>sin abogado y por menos de lo que cuesta una consulta</p>
       <button class="btn gold" onclick="irAlPagoDirecto();" style="margin-bottom:10px;">Generar mi contrato ahora →</button>
@@ -555,16 +575,22 @@ footer a:hover{color:var(--gold);}
       <div class="card-title">Vista previa del documento</div>
       <div class="card-sub">Revisá el contenido antes de pagar. El documento final será idéntico a esta vista previa.</div>
 
-      <div id="previewContainer" style="position:relative;margin:16px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--cream);max-height:520px;overflow-y:auto;">
+      <div id="previewContainer" style="position:relative;margin:16px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--cream);max-height:360px;">
         <canvas id="previewCanvas" style="display:block;width:100%;cursor:default;"></canvas>
-        <div id="previewWatermarkOverlay" style="position:absolute;inset:0;overflow:hidden;opacity:0.11;pointer-events:none;"></div>
+        <div id="previewWatermarkOverlay" style="position:absolute;inset:0;overflow:hidden;opacity:0.13;pointer-events:none;"></div>
+        <!-- Fade gradient sobre el bottom -->
+        <div id="previewFadeOverlay"></div>
+        <!-- CTA de desbloqueo sobre el preview -->
+        <div id="previewCTA">
+          <button class="btn-desbloquear" onclick="(function(){fetch(CONFIG.WORKER_URL+'/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_preview',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||'',utm_med:sessionStorage.getItem('legalai_utm_medium')||''})}).catch(function(){});})();irAlPagoDesdePreview()">
+            🔓 Desbloquear documento completo →
+          </button>
+          <div class="preview-lock-msg">Pago único · Sin suscripción · PDF listo para firmar</div>
+        </div>
       </div>
 
-      <div class="alert grn alert-show" style="margin-top:12px;">✓ El documento final es idéntico a esta vista previa</div>
       <div class="alert err" id="alertPreview"></div>
-
-      <button class="btn gold" id="btnPagarDesdePreview" onclick="(function(){fetch('https://legalai-worker.finmap-ia.workers.dev/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_preview',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||'',utm_med:sessionStorage.getItem('legalai_utm_medium')||''})}).catch(function(){});})();irAlPagoDesdePreview()">Pagar y obtener documento →</button>
-      <button class="btn ghost" onclick="volverDatosDesdePreview()">← Volver y editar datos</button>
+      <button class="btn ghost" style="margin-top:8px;" onclick="volverDatosDesdePreview()">← Volver y editar datos</button>
     </div>
 
     <!-- CARD 3 -->
@@ -590,7 +616,7 @@ footer a:hover{color:var(--gold);}
       </div>
 
       <div class="alert err" id="alert3"></div>
-      <button class="btn gold" id="btnPagar" onclick="(function(){fetch('https://legalai-worker.finmap-ia.workers.dev/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_mp',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||'',utm_med:sessionStorage.getItem('legalai_utm_medium')||''})}).catch(function(){});})();procesarPago()">Pagar con MercadoPago →</button>
+      <button class="btn gold" id="btnPagar" onclick="(function(){fetch(CONFIG.WORKER_URL+'/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_mp',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||'',utm_med:sessionStorage.getItem('legalai_utm_medium')||''})}).catch(function(){});})();procesarPago()">Pagar con MercadoPago →</button>
       <button class="btn ghost" onclick="volver()">← Volver y editar datos</button>
     </div>
 
@@ -1190,7 +1216,8 @@ footer a:hover{color:var(--gold);}
 <!-- FOOTER -->
 <footer>
   <p>
-    LegalAI Arg · Documentos orientativos generados con inteligencia artificial<br>
+    LegalAI Arg · Contratos de alquiler online Argentina · Documentos legales orientativos<br>
+    Contrato alquiler PDF · Contrato locación vivienda · Carta documento · Contratos freelance<br>
     No constituyen asesoramiento legal profesional · Para casos específicos consultá a un profesional matriculado<br>
     Contacto: <a id="footerEmail" href="#"><!-- email --></a>
   </p>
@@ -1476,15 +1503,6 @@ async function enviarSolicitudAfiliado() {
 }
 
 /* ── AFILIADOS: tracking del ref en sessionStorage ──────────────────────── */
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const ref = params.get("ref");
-
-  if (ref) {
-    sessionStorage.setItem("ref", ref);
-  }
-})();
-  
 (function captureRef() {
   const ref = new URLSearchParams(window.location.search).get('ref');
   if (ref) {
@@ -1811,16 +1829,18 @@ function renderizarPreviewCanvas(texto, titulo) {
   }
   totalH += 40;
 
-  canvas.height = totalH;
+  // Limitar canvas al 42% de la altura total — el resto se oculta con fade overlay CSS
+  const alturaMax = Math.ceil(totalH * 0.42);
+  canvas.height = alturaMax;
   canvas.style.height = '';
 
-  // Fondo
   ctx.fillStyle = '#faf9f6';
-  ctx.fillRect(0, 0, W, totalH);
+  ctx.fillRect(0, 0, W, alturaMax);
 
-  // Renderizar líneas
+  // Renderizar líneas hasta el límite de altura
   let y = MT;
   for (const l of lineas) {
+    if (y >= alturaMax - 8) break;
     if (l.tipo === 'h1') {
       ctx.font = `bold 15px Times New Roman, serif`;
       ctx.fillStyle = '#0f1117';
@@ -1832,10 +1852,9 @@ function renderizarPreviewCanvas(texto, titulo) {
       y += 10;
     } else if (l.tipo === 'h2') {
       ctx.font = `bold ${FONT+1}px Times New Roman, serif`;
-      ctx.fillStyle = '#1a1a2e'; ctx.textAlign = 'left';
       ctx.fillStyle = '#f0ede6';
       ctx.fillRect(ML-4, y-1, CW+8, 18);
-      ctx.fillStyle = '#1a1a2e';
+      ctx.fillStyle = '#1a1a2e'; ctx.textAlign = 'left';
       ctx.fillText(l.txt, ML, y + 12);
       y += 26;
     } else if (l.tipo === 'br') {
@@ -1843,10 +1862,18 @@ function renderizarPreviewCanvas(texto, titulo) {
     } else {
       ctx.font = `${FONT}px Times New Roman, serif`;
       ctx.fillStyle = '#282828'; ctx.textAlign = 'left';
-      ctx.fillText(l.txt, ML, y + 12);
+      if (y + 12 < alturaMax) ctx.fillText(l.txt, ML, y + 12);
       y += LINE_H;
     }
   }
+
+  // Gradiente fade en el bottom 40% del canvas visible
+  const fadeY = alturaMax * 0.60;
+  const grad = ctx.createLinearGradient(0, fadeY, 0, alturaMax);
+  grad.addColorStop(0, 'rgba(250,249,246,0)');
+  grad.addColorStop(1, 'rgba(250,249,246,1)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, fadeY, W, alturaMax - fadeY);
 
   // Marca de agua diagonal en overlay
   overlay.innerHTML = '';

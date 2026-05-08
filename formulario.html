@@ -201,8 +201,11 @@ footer a:hover{color:var(--gold)}
       <textarea id="observaciones" rows="3" placeholder="Condiciones adicionales que quieras incluir..."></textarea>
     </div>
 
-    <button class="btn-main" id="btnGenerar" onclick="generarContrato()">
-      VER MI CONTRATO GRATIS
+    <button class="btn-main btn-gold" id="btnPagarDirecto" onclick="pagarDirecto()" style="margin-bottom:8px;">
+      Crear mi contrato ahora →
+    </button>
+    <button class="btn-ghost" id="btnGenerar" onclick="generarContrato()" style="font-size:.85rem;opacity:.8;margin-bottom:0;">
+      Ver vista previa antes de pagar (gratis)
     </button>
     <div class="promesa">
       <div class="promesa-item">No pagás nada ahora</div>
@@ -222,6 +225,7 @@ footer a:hover{color:var(--gold)}
     <div class="card-title">Tu contrato está listo</div>
     <div class="card-sub">Leelo completo. Si te sirve, pagás y descargás el PDF.</div>
     <div class="alert grn visible">✔ Contrato generado · Revisá antes de pagar</div>
+    <div class="alert err" id="alertForm2" style="margin-bottom:12px;"></div>
     <div class="preview-box">
       <canvas id="previewCanvas"></canvas>
       <div id="previewWatermarkOverlay"></div>
@@ -368,12 +372,47 @@ async function generarContrato(){
     renderizarPreview(data.texto);
     showPanel('card2');setProgress(2);
   }catch(err){
-    showPanel('card1');document.getElementById('btnGenerar').disabled=false;setProgress(1);
-    let msg=err.message||'Error desconocido';
-    if(err.name==='TimeoutError'||err.name==='AbortError'){msg='La generación tardó demasiado. Intentá de nuevo.';}
-    else if(msg.includes('Unexpected token')||msg.includes('JSON')||msg.includes('fetch')){msg='Error de conexión. Verificá tu internet e intentá de nuevo.';}
-    showErr('alertForm','⚠️ '+msg);
+    // FALLBACK: preview falló → mostrar aviso y avanzar al pago igualmente
+    G.previewId = null;
+    sessionStorage.removeItem('legalai_previewId');
+    track('preview_fallback', { doc_tipo: DOC_TIPO, error: (err.message||'').slice(0,80) });
+    // Mostrar preview vacío con mensaje y avanzar al pago
+    renderizarPreviewFallback();
+    showPanel('card2'); setProgress(2);
+    showErr('alertForm2','⚠️ No pudimos generar la vista previa, pero podés continuar al pago — el contrato se genera correctamente luego del pago.');
   }
+}
+
+function renderizarPreviewFallback(){
+  const canvas=document.getElementById('previewCanvas');
+  const overlay=document.getElementById('previewWatermarkOverlay');
+  const W=680,H=320;
+  canvas.width=W; canvas.height=H; canvas.style.height='';
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#faf9f6'; ctx.fillRect(0,0,W,H);
+  ctx.font='bold 15px Times New Roman, serif';
+  ctx.fillStyle='#0f1117'; ctx.textAlign='center';
+  ctx.fillText('CONTRATO DE ALQUILER', W/2, 80);
+  ctx.strokeStyle='#c9a84c'; ctx.lineWidth=0.8;
+  ctx.beginPath(); ctx.moveTo(80,96); ctx.lineTo(W-80,96); ctx.stroke();
+  ctx.font='11px Times New Roman, serif';
+  ctx.fillStyle='#888'; ctx.textAlign='center';
+  ctx.fillText('El documento se generará con todos tus datos luego del pago.', W/2, 140);
+  ctx.fillText('Contrato personalizado · Legislación argentina · Listo para firmar', W/2, 165);
+  overlay.innerHTML='';
+}
+
+// Pago directo sin preview
+async function pagarDirecto(){
+  if(!validar())return;
+  const datos={tipo:DOC_TIPO,pais:'Argentina',provincia:document.getElementById('provincia').value.trim(),ciudad:document.getElementById('ciudad').value.trim(),propietario:document.getElementById('propietario').value.trim(),inquilino:document.getElementById('inquilino').value.trim(),direccion:document.getElementById('direccion').value.trim(),monto_mensual:document.getElementById('monto').value.trim(),duracion_meses:document.getElementById('duracion').value.trim(),fecha_inicio:document.getElementById('fecha_inicio').value,deposito:document.getElementById('chk_deposito').checked?'Sí, 1 mes de garantía':'No',ajuste:document.getElementById('chk_ajuste').checked?'Sí, ajuste periódico según índice legal':'No',servicios:document.getElementById('chk_servicios').checked?'A cargo del inquilino (luz, gas, expensas ordinarias)':'A cargo del propietario',observaciones:document.getElementById('observaciones').value.trim()||''};
+  const meta={titulo:DOC_TIPO,categoria:'complejo',precio_usd:G.precio_usd,upgrade_porcentaje:32,requiere_advertencia_legal:false};
+  sessionStorage.setItem('legalai_datos',JSON.stringify(datos));
+  sessionStorage.setItem('legalai_titulo',DOC_TIPO);
+  sessionStorage.setItem('legalai_meta',JSON.stringify(meta));
+  G.previewId=null; sessionStorage.removeItem('legalai_previewId');
+  track('click_pagar', { doc_tipo: DOC_TIPO });
+  await pagar();
 }
 
 // Preview canvas con marca de agua
@@ -436,7 +475,7 @@ async function generarFinal(paymentId){
     const datos=JSON.parse(sessionStorage.getItem('legalai_datos')||'{}');
     const meta=JSON.parse(sessionStorage.getItem('legalai_meta')||'{}');
     const previewId=G.previewId||sessionStorage.getItem('legalai_previewId')||null;
-    const res=await fetch(WORKER+'/generar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,datosDoc:datos,metadata:meta,previewId})});
+    const res=await fetch(WORKER+'/generar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,datosDoc:datos,metadata:meta,previewId}),signal:AbortSignal.timeout(35000)});
     const data=await res.json();
     if(data.error)throw new Error(data.error);
     G.texto=data.texto;G.paymentId=data.paymentId||paymentId;

@@ -421,13 +421,17 @@ function renderizarPreview(texto){
   const W=680,LINE_H=18,FONT=11,ML=36,MR=36,MT=36,CW=W-ML-MR;
   const ctx=canvas.getContext('2d');
   canvas.width=W;canvas.height=100;ctx.font=FONT+'px Times New Roman, serif';
-  const lineas=[];
+  // Parsear todas las líneas
+  const lineasAll=[];
   for(const raw of texto.split('\n')){
-    if(raw.startsWith('# '))lineas.push({tipo:'h1',txt:raw.replace(/^# /,'').toUpperCase()});
-    else if(raw.startsWith('## ')||raw.startsWith('### '))lineas.push({tipo:'h2',txt:raw.replace(/^#{2,3} /,'')});
-    else if(!raw.trim())lineas.push({tipo:'br'});
-    else{const txt=raw.replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1').trim();ctx.font=FONT+'px Times New Roman, serif';const words=txt.split(' ');let line='';for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>CW&&line){lineas.push({tipo:'p',txt:line});line=w;}else{line=test;}}if(line)lineas.push({tipo:'p',txt:line});}
+    if(raw.startsWith('# '))lineasAll.push({tipo:'h1',txt:raw.replace(/^# /,'').toUpperCase()});
+    else if(raw.startsWith('## ')||raw.startsWith('### '))lineasAll.push({tipo:'h2',txt:raw.replace(/^#{2,3} /,'')});
+    else if(!raw.trim())lineasAll.push({tipo:'br'});
+    else{const txt=raw.replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1').trim();ctx.font=FONT+'px Times New Roman, serif';const words=txt.split(' ');let line='';for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>CW&&line){lineasAll.push({tipo:'p',txt:line});line=w;}else{line=test;}}if(line)lineasAll.push({tipo:'p',txt:line});}
   }
+  // TRUNCAR al 40%
+  const corte=Math.ceil(lineasAll.length*0.40);
+  const lineas=lineasAll.slice(0,corte);
   let totalH=MT;
   for(const l of lineas){if(l.tipo==='h1')totalH+=32;else if(l.tipo==='h2')totalH+=26;else if(l.tipo==='br')totalH+=8;else totalH+=LINE_H;}
   totalH+=40;canvas.height=totalH;canvas.style.height='';
@@ -435,15 +439,22 @@ function renderizarPreview(texto){
   let y=MT;
   for(const l of lineas){
     if(l.tipo==='h1'){ctx.font='bold 15px Times New Roman, serif';ctx.fillStyle='#0f1117';ctx.textAlign='center';ctx.fillText(l.txt,W/2,y+12);y+=22;ctx.strokeStyle='#c9a84c';ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(ML+30,y);ctx.lineTo(W-MR-30,y);ctx.stroke();y+=10;}
-    else if(l.tipo==='h2'){ctx.font='bold '+(FONT+1)+'px Times New Roman, serif';ctx.textAlign='left';ctx.fillStyle='#f0ede6';ctx.fillRect(ML-4,y-1,CW+8,18);ctx.fillStyle='#1a1a2e';ctx.fillText(l.txt,ML,y+12);y+=26;}
+    else if(l.tipo==='h2'){ctx.font='bold '+(FONT+1)+'px Times New Roman, serif';ctx.fillStyle='#f0ede6';ctx.fillRect(ML-4,y-1,CW+8,18);ctx.fillStyle='#1a1a2e';ctx.textAlign='left';ctx.fillText(l.txt,ML,y+12);y+=26;}
     else if(l.tipo==='br'){y+=8;}
     else{ctx.font=FONT+'px Times New Roman, serif';ctx.fillStyle='#282828';ctx.textAlign='left';ctx.fillText(l.txt,ML,y+12);y+=LINE_H;}
   }
+  // Gradiente fade en el bottom 35%
+  const fadeStart=totalH*0.65;
+  const grad=ctx.createLinearGradient(0,fadeStart,0,totalH);
+  grad.addColorStop(0,'rgba(250,249,246,0)');
+  grad.addColorStop(1,'rgba(250,249,246,1)');
+  ctx.fillStyle=grad;ctx.fillRect(0,fadeStart,W,totalH-fadeStart);
+  // Watermark
   overlay.innerHTML='';
   const wText='VISTA PREVIA · LEGALAI ARG · ';
   const repeat=Math.ceil((W*3)/(wText.length*11))+2,rows=Math.ceil(totalH/38)+4;
   let html='';for(let r=0;r<rows;r++)html+='<div style="white-space:nowrap;height:38px;line-height:38px;">'+wText.repeat(repeat)+'</div>';
-  overlay.style.cssText='position:absolute;inset:0;overflow:hidden;opacity:0.11;pointer-events:none;font-family:\'DM Mono\',monospace;font-size:13px;font-weight:700;color:#c9a84c;transform:rotate(-25deg) translateY(-10%);transform-origin:center center;word-break:break-all;letter-spacing:3px;';
+  overlay.style.cssText='position:absolute;inset:0;overflow:hidden;opacity:0.13;pointer-events:none;font-family:\'DM Mono\',monospace;font-size:13px;font-weight:700;color:#c9a84c;transform:rotate(-25deg) translateY(-10%);transform-origin:center center;word-break:break-all;letter-spacing:3px;';
   overlay.innerHTML=html;
 }
 

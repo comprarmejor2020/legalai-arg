@@ -436,13 +436,8 @@ function renderPrecios(cot) {
 
 // ── Conversión + tracking ──────────────────────────────────────────
 function fireConversion(boton) {
-  // Google Ads — con valor real
-  try {
-    var v = PRECIO_USD;
-    gtag('event', 'conversion', { 'send_to': 'AW-18073890544', 'value': v, 'currency': 'USD' });
-  } catch(_) {}
-
-  // Tracking propio — fire-and-forget
+  // Solo tracking de interacción — gtag conversion se dispara ÚNICAMENTE en gracias.html
+  // tras confirmación real de MercadoPago (status=approved + payment_id)
   try {
     var ss = sessionStorage;
     var u  = new URLSearchParams(location.search);

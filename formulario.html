@@ -450,7 +450,7 @@ function renderizarPreview(texto){
 // Pagar
 async function pagar(){
   if(!cotizacion.valor){alert('Esperá un momento, cargando precio...');return;}
-  try{gtag('event','conversion',{'send_to':'AW-18073890544','value':G.precio_usd,'currency':'USD'});}catch(_){}
+  // gtag conversion se dispara SOLO en gracias.html tras pago aprobado
   fetch(WORKER+'/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_formulario',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||''})}).catch(()=>{});
   track('inicio_pago', { doc_tipo: DOC_TIPO, precio_usd: G.precio_usd });
   showPanel('loadingPago');setProgress(3);
@@ -484,6 +484,7 @@ async function generarFinal(paymentId){
     sessionStorage.removeItem('legalai_previewId');
     showPanel('card4');setProgress(4);
     track('documento_generado', { doc_tipo: DOC_TIPO, precio_usd: parseFloat(sessionStorage.getItem('legalai_precio_usd') || '11') });
+    // Conversión real — se ejecuta tras pago aprobado por MercadoPago
     try{gtag('event','conversion',{'send_to':'AW-18073890544','value':parseFloat(sessionStorage.getItem('legalai_precio_usd')||'11')||11,'currency':'USD','transaction_id':G.paymentId});}catch(_){}
   }catch(err){showPanel('card2');setProgress(2);alert('Error al generar el documento: '+err.message);}
 }

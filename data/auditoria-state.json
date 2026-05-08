@@ -17,19 +17,24 @@
       "descripcion": "Desacoplar completamente el preview del flujo de conversión: permitir que el usuario avance al pago sin necesidad de que el preview se genere con éxito. Mostrar mensaje 'Tu diseño se generará luego del pago' si el preview falla. Eliminar cualquier bloqueo condicional que impida continuar cuando el endpoint de preview devuelve error o no responde.",
       "fecha": "2026-05-06T12:28:30.462Z",
       "resultado_pendiente": true
+    },
+    {
+      "descripcion": "Auditar y corregir el flujo de checkout: verificar que el botón de pago esté funcional, que MercadoPago/pasarela no devuelva error silencioso, que no haya validación bloqueante pendiente (email, preview_id, etc.) antes de redirigir al pago. Loguear errores en el paso 'Inicia pago → Pago confirmado' para identificar el punto exacto de abandono.",
+      "fecha": "2026-05-08T13:38:41.131Z",
+      "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "NO_CAMBIAR",
-  "fecha": "2026-05-08T12:10:12.963Z",
-  "ultima_prioridad": "baja",
-  "ultimo_embudo": null,
+  "ultima_decision": "PROPONER_CAMBIO",
+  "fecha": "2026-05-08T13:38:41.131Z",
+  "ultima_prioridad": "alta",
+  "ultimo_embudo": "Inicia pago → Pago confirmado",
   "cambio_activo": {
-    "descripcion": "Desacoplar completamente el preview del flujo de conversión: permitir que el usuario avance al pago sin necesidad de que el preview se genere con éxito. Mostrar mensaje 'Tu diseño se generará luego del pago' si el preview falla. Eliminar cualquier bloqueo condicional que impida continuar cuando el endpoint de preview devuelve error o no responde.",
-    "archivo": "generador.html",
+    "descripcion": "Auditar y corregir el flujo de checkout: verificar que el botón de pago esté funcional, que MercadoPago/pasarela no devuelva error silencioso, que no haya validación bloqueante pendiente (email, preview_id, etc.) antes de redirigir al pago. Loguear errores en el paso 'Inicia pago → Pago confirmado' para identificar el punto exacto de abandono.",
+    "archivo": "checkout.html",
     "tipo": "flujo_pago",
-    "hipotesis": "Si el preview deja de bloquear el avance al pago → al menos algunos usuarios completarán la conversión aunque el preview esté roto",
+    "hipotesis": "Si el checkout no tiene bloqueos técnicos silenciosos → los 2 usuarios que inician pago logran confirmar → primera venta",
     "conv_base": 0,
-    "clics_base": 16
+    "clics_base": 23
   },
-  "cambio_activo_desde": "2026-05-06T12:28:30.462Z"
+  "cambio_activo_desde": "2026-05-08T13:38:41.131Z"
 }

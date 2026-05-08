@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-08T12:10:12.964Z",
+  "fecha": "2026-05-08T13:38:41.131Z",
   "periodo_48h": {
-    "clics": 21,
+    "clics": 23,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 21,
+        "clics": 23,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 48,
+    "clics": 50,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 48,
+        "clics": 50,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,29 +33,30 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
+    "page_view": 21,
+    "cta_generador": 2,
     "generar_preview": 7,
-    "page_view": 19,
     "inicio_pago": 2
   },
-  "total_eventos": 28,
+  "total_eventos": 32,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 19,
+      "count": 21,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
-      "count": 0,
-      "drop_pct": 100
+      "count": 2,
+      "drop_pct": 90
     },
     {
       "key": "generar_preview",
       "label": "Genera preview",
       "count": 7,
-      "drop_pct": 0
+      "drop_pct": -250
     },
     {
       "key": "preview_ok",
@@ -80,14 +81,14 @@
     {
       "key": "page_view",
       "label": "Visita planes",
-      "count": 0,
+      "count": 1,
       "drop_pct": 0
     },
     {
       "key": "click_plan",
       "label": "Click plan",
       "count": 0,
-      "drop_pct": 0
+      "drop_pct": 100
     },
     {
       "key": "email_confirm",
@@ -109,15 +110,15 @@
     }
   ],
   "cuello_botella": {
-    "en": "Click generador",
+    "en": "Preview OK",
     "drop": "100%",
-    "tipo": "cta_generador"
+    "tipo": "preview_ok"
   },
   "diagnostico": {
     "problemas": [
       "Alto tráfico sin conversiones → problema en checkout o precio",
       "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago",
-      "Fuente \"directo\": 21 clics y 0 ventas → landing o segmentación"
+      "Fuente \"directo\": 23 clics y 0 ventas → landing o segmentación"
     ],
     "oportunidades": [],
     "estado": "PROBLEMA"

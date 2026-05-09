@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-08T13:38:41.131Z",
+  "fecha": "2026-05-09T11:53:05.223Z",
   "periodo_48h": {
-    "clics": 23,
+    "clics": 12,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 23,
+        "clics": 12,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 50,
+    "clics": 49,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 50,
+        "clics": 49,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,30 +33,30 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 21,
-    "cta_generador": 2,
-    "generar_preview": 7,
-    "inicio_pago": 2
+    "cta_generador": 4,
+    "page_view": 14,
+    "generar_preview": 4,
+    "inicio_pago": 1
   },
-  "total_eventos": 32,
+  "total_eventos": 23,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 21,
+      "count": 14,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
-      "count": 2,
-      "drop_pct": 90
+      "count": 4,
+      "drop_pct": 71
     },
     {
       "key": "generar_preview",
       "label": "Genera preview",
-      "count": 7,
-      "drop_pct": -250
+      "count": 4,
+      "drop_pct": 0
     },
     {
       "key": "preview_ok",
@@ -67,7 +67,7 @@
     {
       "key": "inicio_pago",
       "label": "Inicia pago",
-      "count": 2,
+      "count": 1,
       "drop_pct": 0
     },
     {
@@ -116,9 +116,8 @@
   },
   "diagnostico": {
     "problemas": [
-      "Alto tráfico sin conversiones → problema en checkout o precio",
       "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago",
-      "Fuente \"directo\": 23 clics y 0 ventas → landing o segmentación"
+      "Fuente \"directo\": 12 clics y 0 ventas → landing o segmentación"
     ],
     "oportunidades": [],
     "estado": "PROBLEMA"

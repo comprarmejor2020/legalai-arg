@@ -24,10 +24,10 @@
       "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "PROPONER_CAMBIO",
-  "fecha": "2026-05-08T13:38:41.131Z",
-  "ultima_prioridad": "alta",
-  "ultimo_embudo": "Inicia pago → Pago confirmado",
+  "ultima_decision": "NO_CAMBIAR",
+  "fecha": "2026-05-09T11:53:05.223Z",
+  "ultima_prioridad": "baja",
+  "ultimo_embudo": null,
   "cambio_activo": {
     "descripcion": "Auditar y corregir el flujo de checkout: verificar que el botón de pago esté funcional, que MercadoPago/pasarela no devuelva error silencioso, que no haya validación bloqueante pendiente (email, preview_id, etc.) antes de redirigir al pago. Loguear errores en el paso 'Inicia pago → Pago confirmado' para identificar el punto exacto de abandono.",
     "archivo": "checkout.html",

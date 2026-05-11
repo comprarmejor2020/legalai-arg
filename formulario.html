@@ -86,6 +86,29 @@ textarea{resize:vertical;min-height:68px}
 .loading-lbl{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--mist);text-transform:uppercase;letter-spacing:.1em}
 .preview-box{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--cream);max-height:460px;overflow-y:auto;position:relative;margin:14px 0;user-select:none;-webkit-user-select:none}
 #previewCanvas{display:block;width:100%;cursor:default}
+
+/* ── PREVIEW LIVE LOCAL ─────────────────────────────────────────── */
+#form-layout{display:block}
+@media(min-width:720px){
+  #form-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  #preview-live-col{position:sticky;top:72px}
+}
+#preview-live-col{margin-top:20px}
+#preview-live-col .plv-label{font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:8px}
+#preview-live-doc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 16px;font-family:'Times New Roman',serif;font-size:11px;line-height:1.7;color:var(--ink);position:relative;overflow:hidden;max-height:460px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#preview-live-doc h1{font-size:12px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px;border-bottom:1px solid var(--gold);padding-bottom:5px}
+#preview-live-doc h2{font-size:11px;font-weight:700;margin:10px 0 4px;background:rgba(200,168,75,.08);padding:3px 6px;border-radius:4px}
+#preview-live-doc p{margin:0 0 5px}
+#plv-fade{position:absolute;bottom:0;left:0;right:0;height:58%;background:linear-gradient(to bottom,transparent 0%,var(--surface,#fff) 58%);pointer-events:none;z-index:2}
+#plv-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:3;overflow:hidden}
+#plv-watermark span{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:rgba(200,168,75,.17);transform:rotate(-30deg);white-space:nowrap;letter-spacing:.15em;text-transform:uppercase}
+#plv-cta{position:absolute;bottom:0;left:0;right:0;padding:14px 12px 16px;text-align:center;z-index:4}
+.plv-btn{display:block;width:100%;padding:12px 16px;background:var(--gold);color:#0f1117;font-family:'DM Sans',sans-serif;font-weight:800;font-size:.88rem;border:none;border-radius:9px;cursor:pointer;box-shadow:0 4px 16px rgba(200,168,75,.3)}
+.plv-sub{font-size:.68rem;color:var(--mist);font-family:'DM Mono',monospace;margin-top:5px}
+/* Sticky CTA mobile */
+#sticky-cta-f{display:none;position:fixed;bottom:0;left:0;right:0;padding:10px 16px 18px;background:linear-gradient(to top,var(--paper) 80%,transparent);z-index:100}
+@media(max-width:719px){#sticky-cta-f{display:block}}
+@media print{#form-layout,#preview-live-col,#card1{display:none!important}}
 #previewWatermarkOverlay{position:absolute;inset:0;overflow:hidden;opacity:.11;pointer-events:none}
 .precio-box{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .precio-box-lbl{font-size:.84rem;font-weight:600;color:var(--ink)}
@@ -134,6 +157,9 @@ footer a:hover{color:var(--gold)}
 
   <!-- CARD 1: FORMULARIO -->
   <div class="card visible" id="card1">
+  <!-- Layout grid: formulario | preview live -->
+  <div id="form-layout">
+  <div id="form-col">
     <div class="card-title">Datos del contrato</div>
     <div class="card-sub">Completá los campos. Los marcados con <span style="color:var(--gold)">*</span> son obligatorios.</div>
     <div class="alert err" id="alertForm"></div>
@@ -208,10 +234,32 @@ footer a:hover{color:var(--gold)}
       Ver vista previa antes de pagar (gratis)
     </button>
     <div class="promesa">
-      <div class="promesa-item">No pagás nada ahora</div>
-      <div class="promesa-item">Ves el contrato completo antes de decidir</div>
-      <div class="promesa-item">Pagás solo si te sirve</div>
+      <div class="promesa-item">✓ Tu contrato se genera luego del pago</div>
+      <div class="promesa-item">✓ PDF listo para firmar</div>
+      <div class="promesa-item">✓ Pago único, sin suscripción</div>
     </div>
+  </div><!-- /form-col -->
+
+  <!-- Preview live instantáneo -->
+  <div id="preview-live-col">
+    <div class="plv-label">Vista previa del contrato</div>
+    <div id="preview-live-doc">
+      <div id="plv-content"></div>
+      <div id="plv-fade"></div>
+      <div id="plv-watermark"><span>PREVIEW · NO PAGADO · PREVIEW · NO PAGADO · PREVIEW · NO PAGADO</span></div>
+      <div id="plv-cta">
+        <button class="plv-btn" onclick="pagarDirecto()">🔓 Obtener contrato completo →</button>
+        <div class="plv-sub">Pago único · PDF listo para firmar</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /form-layout -->
+  </div><!-- /card1 cierre extra por nuevo open -->
+
+  <!-- Sticky CTA mobile -->
+  <div id="sticky-cta-f">
+    <button class="btn-main btn-gold" onclick="pagarDirecto()" style="margin:0;">Continuar al pago →</button>
   </div>
 
   <!-- LOADING generación -->
@@ -414,6 +462,72 @@ async function pagarDirecto(){
   track('click_pagar', { doc_tipo: DOC_TIPO });
   await pagar();
 }
+
+// ══ PREVIEW LIVE LOCAL — instantáneo, sin IA ══════════════════════
+document.addEventListener('contextmenu', e => { if(document.getElementById('preview-live-doc')?.contains(e.target)) e.preventDefault(); });
+document.addEventListener('keydown', e => {
+  if((e.ctrlKey||e.metaKey)&&(e.key==='p'||e.key==='P'))e.preventDefault();
+});
+
+function actualizarPreviewFormulario() {
+  const el = id => (document.getElementById(id)||{}).value || '';
+  const v  = (val, fb) => val.trim() ? `<strong>${val}</strong>` : `<span style="color:var(--mist)">${fb||'_______________'}</span>`;
+
+  const propietario  = el('propietario');
+  const inquilino    = el('inquilino');
+  const direccion    = el('direccion');
+  const ciudad       = el('ciudad');
+  const provincia    = el('provincia');
+  const monto        = el('monto');
+  const duracion     = el('duracion');
+  const fecha_inicio = el('fecha_inicio');
+  const garante      = el('garante');
+  const hoy = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
+
+  const html = `
+    <h1>CONTRATO DE ALQUILER DE VIVIENDA</h1>
+    <p style="text-align:center;font-size:10px;color:var(--mist);margin-bottom:10px">${hoy} · ${ciudad||'___'}, ${provincia||'___'}</p>
+    <h2>PARTES INTERVINIENTES</h2>
+    <p><strong>Propietario:</strong> ${v(propietario)}</p>
+    <p><strong>Inquilino:</strong> ${v(inquilino)}</p>
+    ${garante ? `<p><strong>Garante:</strong> ${v(garante)}</p>` : ''}
+    <h2>INMUEBLE OBJETO DEL CONTRATO</h2>
+    <p><strong>Dirección:</strong> ${v(direccion)} — ${v(ciudad)}, ${v(provincia)}</p>
+    <h2>CONDICIONES ECONÓMICAS</h2>
+    <p><strong>Monto mensual:</strong> ${monto ? `<strong>$ ${monto}</strong>` : '<span style="color:var(--mist)">_______________</span>'}</p>
+    <h2>PLAZO DEL CONTRATO</h2>
+    <p><strong>Duración:</strong> ${v(duracion,'___ meses')}</p>
+    ${fecha_inicio ? `<p><strong>Inicio:</strong> ${v(fecha_inicio)}</p>` : ''}
+    <h2>CLÁUSULA SIGUIENTE BLOQUEADA ▼</h2>
+    <p style="color:var(--mist);font-style:italic;font-size:10px">Cláusulas de rescisión, obligaciones, servicios y firmas disponibles luego del pago.</p>
+  `;
+
+  const content = document.getElementById('plv-content');
+  if(content) content.innerHTML = html;
+}
+
+// Enganchar a todos los inputs del formulario
+function initPreviewFormulario() {
+  const campos = ['propietario','inquilino','garante','direccion','ciudad','provincia',
+                  'monto','duracion','fecha_inicio','observaciones'];
+  campos.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.addEventListener('input', actualizarPreviewFormulario);
+      el.addEventListener('change', actualizarPreviewFormulario);
+    }
+  });
+  // También checkboxes
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', actualizarPreviewFormulario);
+  });
+  actualizarPreviewFormulario(); // render inicial
+}
+
+// Inicializar al cargar
+window.addEventListener('load', () => {
+  setTimeout(initPreviewFormulario, 100);
+});
 
 // Preview canvas con marca de agua
 function renderizarPreview(texto){

@@ -354,6 +354,142 @@ footer a:hover{color:var(--gold);}
 }
     #previewCanvas { user-select:none; -webkit-user-select:none; pointer-events:none; }
     #card25 { user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+
+    /* ── PREVIEW LIVE ───────────────────────────────────────────── */
+    #preview-live-wrap {
+      display:none;
+      margin-top:24px;
+    }
+    #preview-live-wrap.visible { display:block; }
+
+    /* En desktop: formulario + preview side by side */
+    @media(min-width:720px) {
+      #card2-inner {
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:24px;
+        align-items:start;
+      }
+      #preview-live-wrap {
+        position:sticky;
+        top:80px;
+      }
+    }
+
+    #preview-live-doc {
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:20px 18px;
+      font-family:'Times New Roman',serif;
+      font-size:11px;
+      line-height:1.7;
+      color:var(--ink);
+      position:relative;
+      overflow:hidden;
+      max-height:480px;
+      user-select:none;
+      -webkit-user-select:none;
+      -webkit-touch-callout:none;
+    }
+    #preview-live-doc h1 {
+      font-size:13px;
+      font-weight:700;
+      text-align:center;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      margin:0 0 6px;
+      color:var(--ink);
+      border-bottom:1px solid var(--gold);
+      padding-bottom:6px;
+    }
+    #preview-live-doc h2 {
+      font-size:11px;
+      font-weight:700;
+      margin:10px 0 4px;
+      background:rgba(200,168,75,.08);
+      padding:3px 6px;
+      border-radius:4px;
+    }
+    #preview-live-doc p {
+      margin:0 0 6px;
+    }
+    /* Fade + blur sobre el 55% inferior */
+    #preview-live-fade {
+      position:absolute;
+      bottom:0; left:0; right:0;
+      height:60%;
+      background:linear-gradient(to bottom, transparent 0%, var(--surface,#fff) 60%);
+      pointer-events:none;
+      z-index:2;
+    }
+    /* Watermark diagonal */
+    #preview-live-watermark {
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      z-index:3;
+      overflow:hidden;
+    }
+    #preview-live-watermark span {
+      font-family:'DM Mono',monospace;
+      font-size:11px;
+      font-weight:700;
+      color:rgba(200,168,75,.18);
+      transform:rotate(-30deg);
+      white-space:nowrap;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+    /* CTA de desbloqueo */
+    #preview-live-cta {
+      position:absolute;
+      bottom:0; left:0; right:0;
+      padding:16px 12px 18px;
+      text-align:center;
+      z-index:4;
+    }
+    .btn-live-pagar {
+      display:inline-block;
+      width:100%;
+      padding:13px 20px;
+      background:var(--gold);
+      color:#0f1117;
+      font-family:'DM Sans',sans-serif;
+      font-weight:800;
+      font-size:.9rem;
+      border:none;
+      border-radius:9px;
+      cursor:pointer;
+      box-shadow:0 4px 18px rgba(200,168,75,.35);
+      transition:opacity .15s;
+    }
+    .btn-live-pagar:hover { opacity:.88; }
+    .preview-live-lock {
+      font-size:.7rem;
+      color:var(--mist);
+      font-family:'DM Mono',monospace;
+      margin-top:6px;
+    }
+    /* Sticky CTA mobile */
+    #sticky-cta-mobile {
+      display:none;
+      position:fixed;
+      bottom:0; left:0; right:0;
+      padding:12px 16px 20px;
+      background:linear-gradient(to top, var(--paper) 80%, transparent);
+      z-index:100;
+    }
+    @media(max-width:719px) {
+      #sticky-cta-mobile.visible { display:block; }
+    }
+    /* Bloquear impresión del preview */
+    @media print {
+      #card2, #card2-inner, #preview-live-wrap { display:none !important; }
+    }
     #previewContainer { position:relative; overflow:hidden; }
     #previewFadeOverlay {
       position:absolute; bottom:0; left:0; right:0;
@@ -480,9 +616,9 @@ footer a:hover{color:var(--gold);}
     <div class="steps-bar">
       <div class="step-bar active" id="step1">1 · Tipo</div>
       <div class="step-bar" id="step2">2 · Datos</div>
-      <div class="step-bar" id="step25">3 · Vista previa</div>
-      <div class="step-bar" id="step3">4 · Pago</div>
-      <div class="step-bar" id="step4">5 · Descarga</div>
+      <div class="step-bar" id="step25" style="display:none;"></div>
+      <div class="step-bar" id="step3">3 · Pago</div>
+      <div class="step-bar" id="step4">4 · Descarga</div>
     </div>
 
     <!-- CARD 1 -->
@@ -549,19 +685,52 @@ footer a:hover{color:var(--gold);}
     <div class="card" id="card2">
       <div class="card-title" id="formTitle">Completá los datos</div>
       <div class="card-sub" id="formDesc">Los campos marcados con * son obligatorios.</div>
-      <div class="alert info" id="alertLeg"></div>
-      <div id="formFields" class="fields-grid"></div>
-      <div class="alert err" id="alert2" style="margin-top:16px;"></div>
-      <br>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
-        <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">🔒 Pago seguro MercadoPago</span>
-        <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ PDF listo para firmar</span>
-        <span style="font-size:.75rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ Legislación vigente</span>
-      </div>
-      <p style="text-align:center;font-size:13px;color:var(--mist);margin:0 0 12px;line-height:1.5;">Tu contrato legal listo para usar en 5 minutos —<br>sin abogado y por menos de lo que cuesta una consulta</p>
-      <button class="btn gold" onclick="irAlPagoDirecto();" style="margin-bottom:10px;">Generar mi contrato ahora →</button>
-      <p style="text-align:center;font-size:12px;color:var(--mist);margin:0 0 8px;">✓ Se genera automáticamente luego del pago · Usado por cientos de personas en Argentina</p>
-      <button class="btn ghost" onclick="irAPreview()" style="font-size:13px;opacity:0.75;">Ver vista previa antes de pagar</button>
+
+      <!-- LAYOUT GRID: formulario | preview live -->
+      <div id="card2-inner">
+
+        <!-- Columna izquierda: campos -->
+        <div id="card2-fields">
+          <div class="alert info" id="alertLeg"></div>
+          <div id="formFields" class="fields-grid"></div>
+          <div class="alert err" id="alert2" style="margin-top:16px;"></div>
+          <br>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;">
+            <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">🔒 Pago seguro MercadoPago</span>
+            <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ PDF listo para firmar</span>
+          </div>
+          <!-- Botón principal SIEMPRE visible — nunca depende del preview -->
+          <button class="btn gold" onclick="irAlPagoDirecto();" style="margin-bottom:8px;">Continuar al pago →</button>
+          <p style="text-align:center;font-size:11px;color:var(--mist);margin:0;">✓ Tu documento se genera luego del pago · Sin esperas</p>
+        </div>
+
+        <!-- Columna derecha: preview live instantáneo -->
+        <div id="preview-live-wrap">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:8px;">Vista previa del documento</div>
+          <div id="preview-live-doc">
+            <div id="preview-live-content">
+              <!-- Se renderiza instantáneo con JS, sin IA -->
+            </div>
+            <!-- Fade blur sobre el 55% inferior -->
+            <div id="preview-live-fade"></div>
+            <!-- Watermark -->
+            <div id="preview-live-watermark">
+              <span>PREVIEW · NO PAGADO · PREVIEW · NO PAGADO · PREVIEW · NO PAGADO</span>
+            </div>
+            <!-- CTA sobre el preview -->
+            <div id="preview-live-cta">
+              <button class="btn-live-pagar" onclick="irAlPagoDirecto();">🔓 Obtener documento completo →</button>
+              <div class="preview-live-lock">Pago único · PDF listo para firmar</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /card2-inner -->
+    </div>
+
+    <!-- Sticky CTA mobile — siempre visible cuando está en card2 -->
+    <div id="sticky-cta-mobile">
+      <button class="btn gold" onclick="irAlPagoDirecto();" style="width:100%;font-size:.92rem;padding:14px;">Continuar al pago →</button>
     </div>
 
     <!-- LOADING PREVIEW -->
@@ -1248,6 +1417,146 @@ const _SESSION_ID = sessionStorage.getItem('legalai_sid') || (() => {
   return sid;
 })();
 
+// ══════════════════════════════════════════════════════════════════
+//  PREVIEW LIVE LOCAL — instantáneo, sin IA, sin endpoints
+// ══════════════════════════════════════════════════════════════════
+
+// Protecciones anti copy/print/export
+document.addEventListener('contextmenu', e => { if (document.getElementById('preview-live-doc')?.contains(e.target)) e.preventDefault(); });
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
+    const sel = window.getSelection()?.anchorNode;
+    if (document.getElementById('preview-live-doc')?.contains(sel)) e.preventDefault();
+  }
+});
+
+// Templates por tipo de documento (fallback genérico si no hay match)
+function getPreviewTemplate(titulo, campos, datos) {
+  const hoy = new Date().toLocaleDateString('es-AR', { day:'numeric', month:'long', year:'numeric' });
+  const pais = datos.pais || datos.provincia_estado && 'Argentina' || 'Argentina';
+  const prov = datos.provincia_estado || datos.provincia || '___________';
+
+  // Helper: valor o placeholder con guiones
+  const v = (key, fallback) => {
+    const val = datos[key];
+    return (val && val.trim()) ? `<strong>${val}</strong>` : `<span style="color:var(--mist)">${fallback || '________________________'}</span>`;
+  };
+  const vt = (key, fallback) => {
+    const val = datos[key];
+    return (val && val.trim()) ? val : (fallback || '________________________');
+  };
+
+  // Título del documento
+  const tituloDoc = titulo || G.tipo || 'Documento Legal';
+
+  // Template genérico estructurado como documento real
+  return `
+    <h1>${tituloDoc.toUpperCase()}</h1>
+    <p style="text-align:center;color:var(--mist);font-size:10px;margin-bottom:12px;">${hoy} · ${prov}, ${pais}</p>
+
+    <h2>DATOS DE LAS PARTES</h2>
+    ${buildPartesHTML(campos, datos, v, vt)}
+
+    <h2>OBJETO DEL DOCUMENTO</h2>
+    ${buildObjetoHTML(campos, datos, v, vt, titulo)}
+
+    <h2>CONDICIONES ECONÓMICAS</h2>
+    ${buildEconomicaHTML(campos, datos, v, vt)}
+
+    <h2>PLAZO Y VIGENCIA</h2>
+    ${buildPlazoHTML(campos, datos, v, vt)}
+
+    <h2>CLÁUSULA SIGUIENTE BLOQUEADA ▼</h2>
+    <p style="color:var(--mist);font-style:italic;">El resto del documento (cláusulas legales, firmas y anexos) se desbloquea luego del pago.</p>
+  `;
+}
+
+function buildPartesHTML(campos, datos, v, vt) {
+  // Buscar campos de propietario, inquilino, parte, cliente, prestador, etc.
+  const camposPartes = campos.filter(c =>
+    /propietario|inquilino|locador|locatario|parte|cliente|prestador|vendedor|comprador|nombre|cedente|cesionario/i.test(c.id + c.label)
+  );
+  if (!camposPartes.length) {
+    return `<p>Partes intervinientes: ${v('nombre', '________________________')} y ${v('otra_parte', '________________________')}</p>`;
+  }
+  return camposPartes.slice(0, 4).map(c =>
+    `<p><strong>${c.label}:</strong> ${v(c.id)}</p>`
+  ).join('');
+}
+
+function buildObjetoHTML(campos, datos, v, vt, titulo) {
+  const camposObjeto = campos.filter(c =>
+    /direccion|inmueble|objeto|descripcion|servicio|bien|ubicacion|domicilio_propiedad|local/i.test(c.id + c.label)
+  );
+  if (!camposObjeto.length) return `<p>El presente documento tiene por objeto lo acordado entre las partes.</p>`;
+  return camposObjeto.slice(0, 3).map(c =>
+    `<p><strong>${c.label}:</strong> ${v(c.id)}</p>`
+  ).join('');
+}
+
+function buildEconomicaHTML(campos, datos, v, vt) {
+  const camposEco = campos.filter(c =>
+    /monto|precio|alquiler|honorario|importe|valor|pago|cuota|deposito|garantia/i.test(c.id + c.label)
+  );
+  if (!camposEco.length) return `<p>Las condiciones económicas serán las acordadas entre las partes.</p>`;
+  return camposEco.slice(0, 3).map(c =>
+    `<p><strong>${c.label}:</strong> ${v(c.id)}</p>`
+  ).join('');
+}
+
+function buildPlazoHTML(campos, datos, v, vt) {
+  const camposPlazo = campos.filter(c =>
+    /plazo|duracion|vigencia|fecha|inicio|vencimiento|meses|años/i.test(c.id + c.label)
+  );
+  if (!camposPlazo.length) return `<p>El plazo será el acordado entre las partes al momento de la firma.</p>`;
+  return camposPlazo.slice(0, 3).map(c =>
+    `<p><strong>${c.label}:</strong> ${v(c.id)}</p>`
+  ).join('');
+}
+
+// Render instantáneo — escucha cambios en el formulario
+function actualizarPreviewLive() {
+  const wrap = document.getElementById('preview-live-wrap');
+  const content = document.getElementById('preview-live-content');
+  if (!wrap || !content || !G.campos?.length) return;
+
+  // Recopilar datos actuales del formulario
+  const datos = {};
+  (G.campos || []).forEach(c => {
+    const el = document.getElementById(c.id);
+    if (el) datos[c.id] = el.value;
+  });
+
+  // Render del template local
+  content.innerHTML = getPreviewTemplate(G.form?.titulo || G.tipo, G.campos, datos);
+
+  // Mostrar el wrap si está oculto
+  wrap.classList.add('visible');
+}
+
+// Enganchar listeners en todos los campos del formulario
+function engacharPreviewListeners() {
+  (G.campos || []).forEach(c => {
+    const el = document.getElementById(c.id);
+    if (!el) return;
+    el.addEventListener('input', actualizarPreviewLive);
+    el.addEventListener('change', actualizarPreviewLive);
+  });
+  // Render inicial inmediato
+  actualizarPreviewLive();
+
+  // Mostrar sticky CTA en mobile
+  const sticky = document.getElementById('sticky-cta-mobile');
+  if (sticky) sticky.classList.add('visible');
+}
+
+// Ocultar sticky CTA cuando no está en card2
+function ocultarStickyMobile() {
+  const sticky = document.getElementById('sticky-cta-mobile');
+  if (sticky) sticky.classList.remove('visible');
+}
+
 // ── trackCTA: wrapper para CTAs de landing ────────────────────────
 function trackCTA(boton) {
   // Solo tracking de interacción, NO conversión (conversión solo se dispara en gracias.html)
@@ -1570,6 +1879,15 @@ function empezarDeNuevo() {
   showCard(1);
 }
 function showCard(n) {
+  // Ocultar sticky CTA al cambiar de card
+  ocultarStickyMobile();
+  // Mostrar sticky CTA solo en card2
+  if (n === 2) {
+    setTimeout(() => {
+      const sticky = document.getElementById('sticky-cta-mobile');
+      if (sticky) sticky.classList.add('visible');
+    }, 100);
+  }
   // Hide all cards including card25
   [1,2,'25',3,4].forEach(i => {
     const card = document.getElementById('card'+i);
@@ -1659,6 +1977,10 @@ async function generarFormulario() {
       div.appendChild(lbl); div.appendChild(inp); container.appendChild(div);
     });
     showCard(2);
+    // Enganchar preview live INMEDIATAMENTE — no esperar IA
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      engacharPreviewListeners();
+    }));
   } catch(err) {
     document.getElementById('loadingForm').classList.remove('visible');
     document.getElementById('card1').classList.add('visible');
@@ -1779,6 +2101,7 @@ function irAlPagoDirecto() {
   G.previewId = null;
   sessionStorage.removeItem('legalai_previewId');
   track('click_pagar', { doc_tipo: G.form?.titulo || G.tipo });
+  ocultarStickyMobile();
   irAlPago();
 }
 

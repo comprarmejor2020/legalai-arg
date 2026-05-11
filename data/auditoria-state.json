@@ -22,19 +22,24 @@
       "descripcion": "Auditar y corregir el flujo de checkout: verificar que el botón de pago esté funcional, que MercadoPago/pasarela no devuelva error silencioso, que no haya validación bloqueante pendiente (email, preview_id, etc.) antes de redirigir al pago. Loguear errores en el paso 'Inicia pago → Pago confirmado' para identificar el punto exacto de abandono.",
       "fecha": "2026-05-08T13:38:41.131Z",
       "resultado_pendiente": true
+    },
+    {
+      "descripcion": "Reemplazar el flujo actual por un camino mínimo viable: 1) El usuario completa el formulario, 2) Se redirige directamente al checkout sin requerir preview_ok=true, 3) El preview se genera post-pago de forma asíncrona. Eliminar cualquier estado o variable de sesión que bloquee el avance si preview_ok es falso o nulo. Agregar log explícito en frontend y backend cuando el usuario toca el botón de pago para detectar si el evento siquiera se dispara.",
+      "fecha": "2026-05-11T13:49:22.243Z",
+      "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "NO_CAMBIAR",
-  "fecha": "2026-05-10T11:54:57.826Z",
-  "ultima_prioridad": "baja",
-  "ultimo_embudo": null,
+  "ultima_decision": "PROPONER_CAMBIO",
+  "fecha": "2026-05-11T13:49:22.243Z",
+  "ultima_prioridad": "alta",
+  "ultimo_embudo": "Preview OK → Inicia pago",
   "cambio_activo": {
-    "descripcion": "Auditar y corregir el flujo de checkout: verificar que el botón de pago esté funcional, que MercadoPago/pasarela no devuelva error silencioso, que no haya validación bloqueante pendiente (email, preview_id, etc.) antes de redirigir al pago. Loguear errores en el paso 'Inicia pago → Pago confirmado' para identificar el punto exacto de abandono.",
-    "archivo": "checkout.html",
+    "descripcion": "Reemplazar el flujo actual por un camino mínimo viable: 1) El usuario completa el formulario, 2) Se redirige directamente al checkout sin requerir preview_ok=true, 3) El preview se genera post-pago de forma asíncrona. Eliminar cualquier estado o variable de sesión que bloquee el avance si preview_ok es falso o nulo. Agregar log explícito en frontend y backend cuando el usuario toca el botón de pago para detectar si el evento siquiera se dispara.",
+    "archivo": "generador.html",
     "tipo": "flujo_pago",
-    "hipotesis": "Si el checkout no tiene bloqueos técnicos silenciosos → los 2 usuarios que inician pago logran confirmar → primera venta",
+    "hipotesis": "Si el avance al checkout no depende del estado del preview y se elimina toda validación bloqueante pre-pago → al menos 1 pago confirmado en las próximas 48h",
     "conv_base": 0,
-    "clics_base": 23
+    "clics_base": 3
   },
-  "cambio_activo_desde": "2026-05-08T13:38:41.131Z"
+  "cambio_activo_desde": "2026-05-11T13:49:22.243Z"
 }

@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-05-10T11:54:57.826Z",
+  "fecha": "2026-05-11T13:49:22.244Z",
   "periodo_48h": {
     "clics": 3,
     "ventas": 0,
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 45,
+    "clics": 43,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 45,
+        "clics": 43,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,60 +33,63 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
+    "page_view": 9,
     "cta_generador": 4,
-    "page_view": 7
+    "inicio_pago": 1,
+    "click_pagar": 1,
+    "generar_preview": 3
   },
-  "total_eventos": 11,
+  "total_eventos": 18,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 7,
+      "count": 9,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
       "count": 4,
-      "drop_pct": 43
+      "drop_pct": 56
     },
     {
       "key": "generar_preview",
       "label": "Genera preview",
-      "count": 0,
-      "drop_pct": 100
+      "count": 3,
+      "drop_pct": 25
     },
     {
       "key": "preview_ok",
       "label": "Preview OK",
       "count": 0,
-      "drop_pct": 0
+      "drop_pct": 100
     },
     {
       "key": "inicio_pago",
       "label": "Inicia pago",
-      "count": 0,
+      "count": 1,
       "drop_pct": 0
     },
     {
       "key": "pago_ok",
       "label": "Pago confirmado",
       "count": 0,
-      "drop_pct": 0
+      "drop_pct": 100
     }
   ],
   "funnel_plan": [
     {
       "key": "page_view",
       "label": "Visita planes",
-      "count": 1,
+      "count": 0,
       "drop_pct": 0
     },
     {
       "key": "click_plan",
       "label": "Click plan",
       "count": 0,
-      "drop_pct": 100
+      "drop_pct": 0
     },
     {
       "key": "email_confirm",
@@ -108,9 +111,9 @@
     }
   ],
   "cuello_botella": {
-    "en": "Genera preview",
+    "en": "Preview OK",
     "drop": "100%",
-    "tipo": "generar_preview"
+    "tipo": "preview_ok"
   },
   "diagnostico": {
     "problemas": [],

@@ -29,10 +29,10 @@
       "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "PROPONER_CAMBIO",
-  "fecha": "2026-05-11T13:49:22.243Z",
-  "ultima_prioridad": "alta",
-  "ultimo_embudo": "Preview OK → Inicia pago",
+  "ultima_decision": "NO_CAMBIAR",
+  "fecha": "2026-05-12T13:06:04.054Z",
+  "ultima_prioridad": "baja",
+  "ultimo_embudo": null,
   "cambio_activo": {
     "descripcion": "Reemplazar el flujo actual por un camino mínimo viable: 1) El usuario completa el formulario, 2) Se redirige directamente al checkout sin requerir preview_ok=true, 3) El preview se genera post-pago de forma asíncrona. Eliminar cualquier estado o variable de sesión que bloquee el avance si preview_ok es falso o nulo. Agregar log explícito en frontend y backend cuando el usuario toca el botón de pago para detectar si el evento siquiera se dispara.",
     "archivo": "generador.html",

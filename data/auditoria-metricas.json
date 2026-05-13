@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-12T13:06:04.055Z",
+  "fecha": "2026-05-13T13:13:49.330Z",
   "periodo_48h": {
-    "clics": 6,
+    "clics": 9,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 6,
+        "clics": 9,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 37,
+    "clics": 34,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 37,
+        "clics": 34,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,32 +33,30 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 11,
-    "preview_fallback": 1,
-    "generar_preview": 1,
-    "cta_generador": 3,
+    "page_view": 8,
     "inicio_pago": 1,
-    "click_pagar": 1
+    "preview_fallback": 1,
+    "generar_preview": 1
   },
-  "total_eventos": 18,
+  "total_eventos": 11,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 11,
+      "count": 8,
       "drop_pct": 0
     },
     {
       "key": "cta_generador",
       "label": "Click generador",
-      "count": 3,
-      "drop_pct": 73
+      "count": 0,
+      "drop_pct": 100
     },
     {
       "key": "generar_preview",
       "label": "Genera preview",
       "count": 1,
-      "drop_pct": 67
+      "drop_pct": 0
     },
     {
       "key": "preview_ok",
@@ -112,9 +110,9 @@
     }
   ],
   "cuello_botella": {
-    "en": "Preview OK",
+    "en": "Click generador",
     "drop": "100%",
-    "tipo": "preview_ok"
+    "tipo": "cta_generador"
   },
   "diagnostico": {
     "problemas": [

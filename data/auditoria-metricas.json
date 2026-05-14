@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-13T13:13:49.330Z",
+  "fecha": "2026-05-14T12:27:29.168Z",
   "periodo_48h": {
-    "clics": 9,
+    "clics": 6,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 9,
+        "clics": 6,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 34,
+    "clics": 24,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 34,
+        "clics": 24,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,17 +33,15 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 8,
-    "inicio_pago": 1,
-    "preview_fallback": 1,
-    "generar_preview": 1
+    "page_view": 21,
+    "inicio_pago": 1
   },
-  "total_eventos": 11,
+  "total_eventos": 22,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 8,
+      "count": 21,
       "drop_pct": 0
     },
     {
@@ -55,14 +53,14 @@
     {
       "key": "generar_preview",
       "label": "Genera preview",
-      "count": 1,
+      "count": 0,
       "drop_pct": 0
     },
     {
       "key": "preview_ok",
       "label": "Preview OK",
       "count": 0,
-      "drop_pct": 100
+      "drop_pct": 0
     },
     {
       "key": "inicio_pago",

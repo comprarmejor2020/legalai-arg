@@ -66,6 +66,12 @@ textarea{resize:vertical;min-height:68px}
 .check-item input[type=checkbox]{width:16px;height:16px;margin-top:1px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
 .check-txt strong{display:block;font-size:.87rem;color:var(--ink);cursor:pointer}
 .check-txt span{font-size:.75rem;color:var(--mist);line-height:1.3}
+/* ── BOTONES TOGGLE SELECCIONABLES ── */
+.toggle-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.toggle-btn{padding:9px 14px;border:1.5px solid var(--line);border-radius:20px;background:var(--cream);color:var(--mist);font-family:'DM Sans',sans-serif;font-size:.83rem;cursor:pointer;transition:all .15s;user-select:none;font-weight:500}
+.toggle-btn:hover{border-color:var(--gold);color:var(--ink)}
+.toggle-btn.active{border-color:var(--gold);background:var(--gold-dim);color:var(--ink);font-weight:700}
+.toggle-btn.active::before{content:'✓ ';color:var(--gold)}
 .btn-main{width:100%;padding:15px;background:var(--btn-bg);color:var(--btn-txt);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.97rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}
 .btn-main:hover:not(:disabled){background:var(--btn-hover)}
 .btn-main:disabled{opacity:.5;cursor:not-allowed}
@@ -131,7 +137,8 @@ footer a:hover{color:var(--gold)}
 <header>
   <a class="logo" href="https://legalai-arg.com">LegalAI <span>ARG</span></a>
   <div class="hdr-right">
-    <a class="hdr-back" href="https://legalai-arg.com">← Inicio</a>
+    <a class="hdr-back" href="javascript:history.back()" style="margin-right:4px;">← Volver</a>
+    <a class="hdr-back" href="https://legalai-arg.com">Inicio</a>
     <div class="theme-toggle">
       <button class="theme-btn" id="btnLight"  onclick="setTheme('light')">☀</button>
       <button class="theme-btn" id="btnSystem" onclick="setTheme('system')">⊙</button>
@@ -143,19 +150,21 @@ footer a:hover{color:var(--gold)}
 <div class="wrap">
 
   <div class="intro">
-    <div class="intro-tag">Contrato de alquiler · Argentina 2025</div>
-    <h1>Completá los datos<br>y pagá con <strong style="color:var(--gold)">MercadoPago</strong></h1>
-    <p class="intro-sub">PDF listo para firmar. Entrega inmediata. Sin abogados.</p>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
-      <span style="background:var(--gold-dim);border:1px solid rgba(200,168,75,.2);color:var(--gold);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;font-weight:700;">USD 11</span>
-      <span style="background:var(--sage-dim);border:1px solid rgba(61,90,70,.15);color:var(--sage);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;">🔒 Pago seguro</span>
-      <span style="background:var(--cream);border:1px solid var(--line);color:var(--mist);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;">⚡ Descarga inmediata</span>
+    <div class="intro-tag">// Contrato de alquiler · Argentina 2026</div>
+    <h1>Tu contrato de alquiler<br>listo en <strong style="color:var(--gold)">2 minutos</strong></h1>
+    <p class="intro-sub">Completás los datos → pagás → descargás el PDF. Sin esperas, sin abogados.</p>
+    <!-- Precio + trust visible desde el inicio -->
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;">
+      <span style="background:var(--gold-dim);border:1px solid rgba(200,168,75,.2);color:var(--gold);font-family:'DM Mono',monospace;font-size:.72rem;padding:5px 12px;border-radius:20px;font-weight:600;">USD 11 · Pago único</span>
+      <span style="background:var(--sage-dim);border:1px solid rgba(61,90,70,.15);color:var(--sage);font-family:'DM Mono',monospace;font-size:.72rem;padding:5px 12px;border-radius:20px;">🔒 MercadoPago</span>
+      <span style="background:var(--cream);border:1px solid var(--line);color:var(--mist);font-family:'DM Mono',monospace;font-size:.72rem;padding:5px 12px;border-radius:20px;">📄 PDF inmediato</span>
     </div>
   </div>
 
   <div class="progress">
     <div class="prog-step active" id="ps1"><div class="prog-dot">1</div><div class="prog-lbl">Datos</div></div>
-    <div class="prog-step"        id="ps4"><div class="prog-dot">2</div><div class="prog-lbl">PDF listo</div></div>
+    <div class="prog-step"        id="ps3"><div class="prog-dot">2</div><div class="prog-lbl">Pagar</div></div>
+    <div class="prog-step"        id="ps4"><div class="prog-dot">3</div><div class="prog-lbl">PDF</div></div>
   </div>
 
   <!-- CARD 1: FORMULARIO -->
@@ -170,17 +179,17 @@ footer a:hover{color:var(--gold)}
     <div class="sec-div"><span>Partes</span></div>
     <div class="field">
       <label class="field-label" for="propietario">Propietario <span class="req">*</span></label>
-      <input type="text" id="propietario" placeholder="Nombre y apellido completo" autocomplete="name">
+      <input type="text" id="propietario" placeholder="Nombre y apellido completo">
     </div>
     <div class="field">
       <label class="field-label" for="inquilino">Inquilino <span class="req">*</span></label>
-      <input type="text" id="inquilino" placeholder="Nombre y apellido completo" autocomplete="name">
+      <input type="text" id="inquilino" placeholder="Nombre y apellido completo">
     </div>
 
     <div class="sec-div"><span>Propiedad</span></div>
     <div class="field">
       <label class="field-label" for="direccion">Dirección del inmueble <span class="req">*</span></label>
-      <input type="text" id="direccion" placeholder="Ej: Av. Corrientes 1234, 3° B" autocomplete="street-address">
+      <input type="text" id="direccion" placeholder="Ej: Av. Corrientes 1234, 3° B">
     </div>
     <div class="field-row">
       <div class="field">
@@ -210,19 +219,50 @@ footer a:hover{color:var(--gold)}
     </div>
 
     <div class="sec-div"><span>¿Qué incluye?</span></div>
-    <div class="checks-group">
-      <label class="check-item">
-        <input type="checkbox" id="chk_deposito" checked>
-        <div class="check-txt"><strong>Depósito en garantía</strong><span>1 mes de alquiler como garantía</span></div>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" id="chk_ajuste" checked>
-        <div class="check-txt"><strong>Cláusula de ajuste</strong><span>Actualización periódica del canon locativo</span></div>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" id="chk_servicios">
-        <div class="check-txt"><strong>Servicios a cargo del inquilino</strong><span>Luz, gas, expensas ordinarias</span></div>
-      </label>
+    <!-- Depósito -->
+    <div class="field" style="margin-bottom:10px;">
+      <label class="field-label">Depósito en garantía</label>
+      <div class="toggle-group" id="grupo_deposito">
+        <button type="button" class="toggle-btn active" data-value="si" onclick="toggleOpcion('grupo_deposito',this,'chk_deposito_val')">1 mes de garantía</button>
+        <button type="button" class="toggle-btn" data-value="no" onclick="toggleOpcion('grupo_deposito',this,'chk_deposito_val')">Sin depósito</button>
+      </div>
+      <input type="hidden" id="chk_deposito_val" value="si">
+    </div>
+
+    <!-- Ajuste -->
+    <div class="field" style="margin-bottom:10px;">
+      <label class="field-label">Cláusula de ajuste del alquiler</label>
+      <div class="toggle-group" id="grupo_ajuste">
+        <button type="button" class="toggle-btn active" data-value="icl" onclick="toggleOpcion('grupo_ajuste',this,'chk_ajuste_val')">ICL (índice legal)</button>
+        <button type="button" class="toggle-btn" data-value="ipc" onclick="toggleOpcion('grupo_ajuste',this,'chk_ajuste_val')">IPC</button>
+        <button type="button" class="toggle-btn" data-value="no" onclick="toggleOpcion('grupo_ajuste',this,'chk_ajuste_val')">Sin ajuste</button>
+      </div>
+      <input type="hidden" id="chk_ajuste_val" value="icl">
+    </div>
+
+    <!-- Servicios -->
+    <div class="field" style="margin-bottom:10px;">
+      <label class="field-label">Servicios a cargo del inquilino</label>
+      <div class="toggle-group" id="grupo_servicios">
+        <button type="button" class="toggle-btn active" data-value="luz" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">💡 Luz</button>
+        <button type="button" class="toggle-btn active" data-value="gas" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">🔥 Gas</button>
+        <button type="button" class="toggle-btn active" data-value="agua" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">💧 Agua</button>
+        <button type="button" class="toggle-btn" data-value="expensas_ord" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">🏢 Expensas ord.</button>
+        <button type="button" class="toggle-btn" data-value="expensas_ext" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">🏢 Expensas ext.</button>
+        <button type="button" class="toggle-btn" data-value="internet" onclick="toggleMulti('grupo_servicios',this,'chk_servicios_val')">📶 Internet</button>
+      </div>
+      <input type="hidden" id="chk_servicios_val" value="luz,gas,agua">
+    </div>
+
+    <!-- Uso del inmueble -->
+    <div class="field" style="margin-bottom:10px;">
+      <label class="field-label">Uso del inmueble</label>
+      <div class="toggle-group" id="grupo_uso">
+        <button type="button" class="toggle-btn active" data-value="vivienda" onclick="toggleOpcion('grupo_uso',this,'chk_uso_val')">🏠 Vivienda familiar</button>
+        <button type="button" class="toggle-btn" data-value="comercial" onclick="toggleOpcion('grupo_uso',this,'chk_uso_val')">🏪 Comercial</button>
+        <button type="button" class="toggle-btn" data-value="temporario" onclick="toggleOpcion('grupo_uso',this,'chk_uso_val')">🏖️ Temporario</button>
+      </div>
+      <input type="hidden" id="chk_uso_val" value="vivienda">
     </div>
 
     <div class="sec-div"><span>Observaciones opcionales</span></div>
@@ -231,11 +271,13 @@ footer a:hover{color:var(--gold)}
     </div>
 
     <button class="btn-main btn-gold" id="btnPagarDirecto" onclick="pagarDirecto()" style="margin-bottom:6px;font-size:1.05rem;font-weight:800;padding:17px;">
-      Pagar con MercadoPago — USD 11 →
+      Pagar y descargar mi contrato →
     </button>
-    <div class="promesa" style="margin-top:8px;">
-      <div class="promesa-item">Descarga inmediata · PDF listo para firmar</div>
-      <div class="promesa-item">Pago único · Sin registro · Sin suscripción</div>
+    <p style="text-align:center;font-size:.72rem;color:var(--mist);margin-bottom:10px;font-family:'DM Mono',monospace;">USD 11 · Pago único · Descarga inmediata · Sin suscripción</p>
+    <div class="promesa">
+      <div class="promesa-item">PDF listo para firmar e imprimir</div>
+      <div class="promesa-item">Pago 100% seguro con MercadoPago</div>
+      <div class="promesa-item">Si no te sirve, no pagás nada</div>
     </div>
   </div><!-- /form-col -->
 
@@ -267,7 +309,35 @@ footer a:hover{color:var(--gold)}
     <div class="loading-lbl">Generando tu contrato con IA...</div>
   </div>
 
-
+  <!-- CARD 2: PREVIEW -->
+  <div class="card" id="card2">
+    <div class="card-title">Vista previa de tu contrato</div>
+    <div class="card-sub">Revisá el documento. Pagás solo si te sirve.</div>
+    <div class="alert grn visible">✔ Contrato generado con tus datos · Listo para pagar y descargar</div>
+    <div class="alert err" id="alertForm2" style="margin-bottom:12px;"></div>
+    <div class="preview-box">
+      <canvas id="previewCanvas"></canvas>
+      <div id="previewWatermarkOverlay"></div>
+    </div>
+    <div class="precio-box">
+      <div>
+        <div class="precio-box-lbl">Contrato de alquiler</div>
+        <div class="precio-box-sub">PDF listo para firmar · pago único</div>
+      </div>
+      <div>
+        <div class="precio-box-amt" id="precioAmt">$ —</div>
+        <div class="precio-box-det" id="precioDet">cargando…</div>
+      </div>
+    </div>
+    <p style="font-size:.83rem;color:var(--mist);text-align:center;margin-bottom:10px;font-weight:500">Pagás solo si te sirve el documento</p>
+    <button class="btn-main btn-gold" onclick="pagar()" style="font-size:1.05rem;font-weight:800;padding:17px;">Pagar y descargar mi contrato →</button>
+    <div class="promesa" style="margin-top:12px">
+      <div class="promesa-item">Pago seguro con MercadoPago</div>
+      <div class="promesa-item">Descarga inmediata tras el pago</div>
+      <div class="promesa-item">Modelo orientativo · no reemplaza abogado</div>
+    </div>
+    <button class="btn-ghost" onclick="volverForm()">← Editar datos</button>
+  </div>
 
   <!-- LOADING pago / doc -->
   <div class="loading" id="loadingPago">
@@ -335,7 +405,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>
 
 // Cotización
 async function obtenerCotizacion(){
-  const fuentes=[['https://dolarapi.com/v1/dolares/bolsa',d=>d?.venta,'MEP'],['https://dolarapi.com/v1/dolares/oficial',d=>d?.venta,'Oficial'],['https://api.bluelytics.com.ar/v2/latest',d=>d?.official?.value_sell,'BNA']];
+  const fuentes=[['https://api.bluelytics.com.ar/v2/latest',d=>d?.official?.value_sell,'BNA'],['https://dolarapi.com/v1/dolares/oficial',d=>d?.venta,'BNA'],['https://dolarapi.com/v1/dolares/bolsa',d=>d?.venta,'MEP']];
   for(const[url,extract,fuente]of fuentes){try{const r=await fetch(url,{signal:AbortSignal.timeout(5000)});const d=await r.json();const v=extract(d);if(v&&v>0){cotizacion={valor:v,fuente};renderPrecio();return;}}catch(_){}}
   cotizacion={valor:1200,fuente:'ref.'};renderPrecio();
 }
@@ -350,17 +420,32 @@ function renderPrecio(){
 }
 
 // Progress
-function setProgress(step){[1,4].forEach(i=>{const el=document.getElementById('ps'+i);if(!el)return;el.classList.remove('active','done');if(i<step)el.classList.add('done');if(i===step)el.classList.add('active');});}
+function setProgress(step){[1,3,4].forEach(i=>{const el=document.getElementById('ps'+i);if(!el)return;el.classList.remove('active','done');if(i<step)el.classList.add('done');if(i===step)el.classList.add('active');});}
 
 // Paneles
 function showPanel(id){
-  ['card1','card4','loadingGen','loadingPago','loadingDoc'].forEach(x=>{const el=document.getElementById(x);if(el){el.classList.remove('visible');el.style.display='';}});
+  ['card1','card2','card4','loadingGen','loadingPago','loadingDoc'].forEach(x=>{const el=document.getElementById(x);if(el){el.classList.remove('visible');el.style.display='';}});
   const t=document.getElementById(id);if(!t)return;
   if(id.startsWith('loading'))t.style.display='block';else t.classList.add('visible');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // Validar
+// ── Toggle botones seleccionables ────────────────────────────────
+function toggleOpcion(grupoId, btn, hiddenId) {
+  document.querySelectorAll('#'+grupoId+' .toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(hiddenId).value = btn.dataset.value;
+  if(typeof actualizarPreviewFormulario === 'function') actualizarPreviewFormulario();
+}
+function toggleMulti(grupoId, btn, hiddenId) {
+  btn.classList.toggle('active');
+  const activos = Array.from(document.querySelectorAll('#'+grupoId+' .toggle-btn.active'))
+    .map(b => b.dataset.value);
+  document.getElementById(hiddenId).value = activos.join(',');
+  if(typeof actualizarPreviewFormulario === 'function') actualizarPreviewFormulario();
+}
+
 function validar(){
   const campos=[{id:'propietario',label:'Nombre del propietario'},{id:'inquilino',label:'Nombre del inquilino'},{id:'direccion',label:'Dirección del inmueble'},{id:'ciudad',label:'Ciudad'},{id:'provincia',label:'Provincia'},{id:'monto',label:'Monto mensual'},{id:'duracion',label:'Duración'},{id:'fecha_inicio',label:'Fecha de inicio'}];
   for(const c of campos){const el=document.getElementById(c.id);if(!el||!el.value.trim()){showErr('alertForm','El campo "'+c.label+'" es obligatorio.');el&&el.focus();return false;}}
@@ -373,7 +458,14 @@ function hideErr(id){const el=document.getElementById(id);if(el)el.classList.rem
 async function generarContrato(){
   if(!validar())return;
   document.getElementById('btnGenerar').disabled=true;
-  const datos={tipo:DOC_TIPO,pais:'Argentina',provincia:document.getElementById('provincia').value.trim(),ciudad:document.getElementById('ciudad').value.trim(),propietario:document.getElementById('propietario').value.trim(),inquilino:document.getElementById('inquilino').value.trim(),direccion:document.getElementById('direccion').value.trim(),monto_mensual:document.getElementById('monto').value.trim(),duracion_meses:document.getElementById('duracion').value.trim(),fecha_inicio:document.getElementById('fecha_inicio').value,deposito:document.getElementById('chk_deposito').checked?'Sí, 1 mes de garantía':'No',ajuste:document.getElementById('chk_ajuste').checked?'Sí, ajuste periódico según índice legal':'No',servicios:document.getElementById('chk_servicios').checked?'A cargo del inquilino (luz, gas, expensas ordinarias)':'A cargo del propietario',observaciones:document.getElementById('observaciones').value.trim()||''};
+  const _dep = document.getElementById('chk_deposito_val')?.value || 'si';
+  const _aj  = document.getElementById('chk_ajuste_val')?.value || 'icl';
+  const _srv = document.getElementById('chk_servicios_val')?.value || 'luz,gas,agua';
+  const _uso = document.getElementById('chk_uso_val')?.value || 'vivienda';
+  const _ajTxt = {icl:'Sí, ajuste según ICL (Índice de Contratos de Locación)',ipc:'Sí, ajuste según IPC',no:'Sin cláusula de ajuste'}[_aj] || _aj;
+  const _srvTxt = _srv ? 'A cargo del inquilino: ' + _srv.split(',').join(', ') : 'A cargo del propietario';
+  const _depTxt = _dep === 'si' ? 'Sí, 1 mes de garantía' : 'Sin depósito en garantía';
+  const datos={tipo:DOC_TIPO+(_uso !== 'vivienda' ? ' (uso '+_uso+')':''),pais:'Argentina',provincia:document.getElementById('provincia').value.trim(),ciudad:document.getElementById('ciudad').value.trim(),propietario:document.getElementById('propietario').value.trim(),inquilino:document.getElementById('inquilino').value.trim(),direccion:document.getElementById('direccion').value.trim(),monto_mensual:document.getElementById('monto').value.trim(),duracion_meses:document.getElementById('duracion').value.trim(),fecha_inicio:document.getElementById('fecha_inicio').value,deposito:_depTxt,ajuste:_ajTxt,servicios:_srvTxt,uso_inmueble:_uso,observaciones:document.getElementById('observaciones').value.trim()||''};
   const meta={titulo:DOC_TIPO,categoria:'complejo',precio_usd:G.precio_usd,upgrade_porcentaje:32,requiere_advertencia_legal:false};
   sessionStorage.setItem('legalai_datos',JSON.stringify(datos));
   sessionStorage.setItem('legalai_titulo',DOC_TIPO);
@@ -396,8 +488,9 @@ async function generarContrato(){
     sessionStorage.removeItem('legalai_previewId');
     track('preview_fallback', { doc_tipo: DOC_TIPO, error: (err.message||'').slice(0,80) });
     // Mostrar preview vacío con mensaje y avanzar al pago
-    // Card2 eliminada — ir directo al pago
-    await pagar();
+    renderizarPreviewFallback();
+    showPanel('card2'); setProgress(2);
+    showErr('alertForm2','⚠️ No pudimos generar la vista previa, pero podés continuar al pago — el contrato se genera correctamente luego del pago.');
   }
 }
 
@@ -423,7 +516,14 @@ function renderizarPreviewFallback(){
 // Pago directo sin preview
 async function pagarDirecto(){
   if(!validar())return;
-  const datos={tipo:DOC_TIPO,pais:'Argentina',provincia:document.getElementById('provincia').value.trim(),ciudad:document.getElementById('ciudad').value.trim(),propietario:document.getElementById('propietario').value.trim(),inquilino:document.getElementById('inquilino').value.trim(),direccion:document.getElementById('direccion').value.trim(),monto_mensual:document.getElementById('monto').value.trim(),duracion_meses:document.getElementById('duracion').value.trim(),fecha_inicio:document.getElementById('fecha_inicio').value,deposito:document.getElementById('chk_deposito').checked?'Sí, 1 mes de garantía':'No',ajuste:document.getElementById('chk_ajuste').checked?'Sí, ajuste periódico según índice legal':'No',servicios:document.getElementById('chk_servicios').checked?'A cargo del inquilino (luz, gas, expensas ordinarias)':'A cargo del propietario',observaciones:document.getElementById('observaciones').value.trim()||''};
+  const _dep = document.getElementById('chk_deposito_val')?.value || 'si';
+  const _aj  = document.getElementById('chk_ajuste_val')?.value || 'icl';
+  const _srv = document.getElementById('chk_servicios_val')?.value || 'luz,gas,agua';
+  const _uso = document.getElementById('chk_uso_val')?.value || 'vivienda';
+  const _ajTxt = {icl:'Sí, ajuste según ICL (Índice de Contratos de Locación)',ipc:'Sí, ajuste según IPC',no:'Sin cláusula de ajuste'}[_aj] || _aj;
+  const _srvTxt = _srv ? 'A cargo del inquilino: ' + _srv.split(',').join(', ') : 'A cargo del propietario';
+  const _depTxt = _dep === 'si' ? 'Sí, 1 mes de garantía' : 'Sin depósito en garantía';
+  const datos={tipo:DOC_TIPO+(_uso !== 'vivienda' ? ' (uso '+_uso+')':''),pais:'Argentina',provincia:document.getElementById('provincia').value.trim(),ciudad:document.getElementById('ciudad').value.trim(),propietario:document.getElementById('propietario').value.trim(),inquilino:document.getElementById('inquilino').value.trim(),direccion:document.getElementById('direccion').value.trim(),monto_mensual:document.getElementById('monto').value.trim(),duracion_meses:document.getElementById('duracion').value.trim(),fecha_inicio:document.getElementById('fecha_inicio').value,deposito:_depTxt,ajuste:_ajTxt,servicios:_srvTxt,uso_inmueble:_uso,observaciones:document.getElementById('observaciones').value.trim()||''};
   const meta={titulo:DOC_TIPO,categoria:'complejo',precio_usd:G.precio_usd,upgrade_porcentaje:32,requiere_advertencia_legal:false};
   sessionStorage.setItem('legalai_datos',JSON.stringify(datos));
   sessionStorage.setItem('legalai_titulo',DOC_TIPO);
@@ -452,6 +552,10 @@ function actualizarPreviewFormulario() {
   const duracion     = el('duracion');
   const fecha_inicio = el('fecha_inicio');
   const garante      = el('garante');
+  const deposito_v   = (document.getElementById('chk_deposito_val')||{}).value || 'si';
+  const ajuste_v     = (document.getElementById('chk_ajuste_val')||{}).value || 'icl';
+  const servicios_v  = (document.getElementById('chk_servicios_val')||{}).value || '';
+  const uso_v        = (document.getElementById('chk_uso_val')||{}).value || 'vivienda';
   const hoy = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
 
   const html = `
@@ -465,6 +569,8 @@ function actualizarPreviewFormulario() {
     <p><strong>Dirección:</strong> ${v(direccion)} — ${v(ciudad)}, ${v(provincia)}</p>
     <h2>CONDICIONES ECONÓMICAS</h2>
     <p><strong>Monto mensual:</strong> ${monto ? `<strong>$ ${monto}</strong>` : '<span style="color:var(--mist)">_______________</span>'}</p>
+    <p><strong>Depósito:</strong> ${deposito_v === 'si' ? '✓ 1 mes de garantía' : '—'} &nbsp;|&nbsp; <strong>Ajuste:</strong> ${ajuste_v.toUpperCase()}</p>
+    ${servicios_v ? `<p><strong>Servicios inquilino:</strong> ${servicios_v.split(',').join(', ')}</p>` : ''} 
     <h2>PLAZO DEL CONTRATO</h2>
     <p><strong>Duración:</strong> ${v(duracion,'___ meses')}</p>
     ${fecha_inicio ? `<p><strong>Inicio:</strong> ${v(fecha_inicio)}</p>` : ''}

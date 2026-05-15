@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-05-14T12:27:29.168Z",
+  "fecha": "2026-05-15T12:56:12.124Z",
   "periodo_48h": {
-    "clics": 6,
+    "clics": 3,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 6,
+        "clics": 3,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 24,
+    "clics": 16,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 24,
+        "clics": 16,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,15 +33,14 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 21,
-    "inicio_pago": 1
+    "page_view": 17
   },
-  "total_eventos": 22,
+  "total_eventos": 17,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 21,
+      "count": 17,
       "drop_pct": 0
     },
     {
@@ -65,14 +64,14 @@
     {
       "key": "inicio_pago",
       "label": "Inicia pago",
-      "count": 1,
+      "count": 0,
       "drop_pct": 0
     },
     {
       "key": "pago_ok",
       "label": "Pago confirmado",
       "count": 0,
-      "drop_pct": 100
+      "drop_pct": 0
     }
   ],
   "funnel_plan": [
@@ -113,10 +112,8 @@
     "tipo": "cta_generador"
   },
   "diagnostico": {
-    "problemas": [
-      "Tasa de conv muy baja (0.0%) → revisar copy, precio o flujo de pago"
-    ],
+    "problemas": [],
     "oportunidades": [],
-    "estado": "PROBLEMA"
+    "estado": "OK"
   }
 }

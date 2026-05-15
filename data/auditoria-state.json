@@ -34,10 +34,10 @@
       "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "PROPONER_CAMBIO",
-  "fecha": "2026-05-14T12:27:29.168Z",
-  "ultima_prioridad": "alta",
-  "ultimo_embudo": "Click generador",
+  "ultima_decision": "NO_CAMBIAR",
+  "fecha": "2026-05-15T12:56:12.123Z",
+  "ultima_prioridad": "baja",
+  "ultimo_embudo": null,
   "cambio_activo": {
     "descripcion": "Reemplazar el botón/CTA del generador por un elemento visualmente prominente: cambiar texto a una propuesta de valor directa (ej: 'Crear mi documento ahora'), aumentar contraste y tamaño, moverlo above the fold si no lo está, y eliminar cualquier fricción visual o de scroll que impida verlo. Agregar evento de tracking explícito en el click para confirmar que el evento se dispara.",
     "archivo": "index.html",

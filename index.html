@@ -541,66 +541,65 @@ footer a:hover{color:var(--gold);}
 <!-- INICIO -->
 <div class="section visible" id="sec-inicio">
 
-  <div class="hero">
-    <div class="hero-tag">Contratos online · Argentina · Legislación vigente · Sin abogado</div>
-    <h1>Generá tu contrato de alquiler<br>online en <em>5 minutos</em></h1>
-    <p>Completás los datos, revisás el documento y descargás el PDF listo para firmar. Adaptado a tu provincia y a la legislación vigente.</p>
-    <div class="hero-badges">
-      <span class="badge green">✓ Basado en legislación argentina</span>
-      <span class="badge green">✓ Orientado a tu provincia</span>
-      <span class="badge green">✓ PDF listo para firmar</span>
-      <span class="badge">✓ Pago seguro MercadoPago</span>
-      <span class="badge">Sin registro · Descarga inmediata</span>
+  <!-- STICKY CTA — siempre visible en mobile -->
+  <div id="hero-sticky-mobile" style="display:none;position:fixed;bottom:0;left:0;right:0;padding:10px 16px 20px;background:linear-gradient(to top,var(--paper) 85%,transparent);z-index:200;pointer-events:none;">
+    <a href="formulario.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:.95rem;font-weight:800;padding:14px;pointer-events:all;" onclick="trackCTA('sticky_hero');">
+      Crear contrato de alquiler — USD 11 →
+    </a>
+  </div>
+
+  <div class="hero" style="padding:48px 24px 28px;">
+    <div class="hero-tag">Argentina 2025 · Sin abogado · PDF inmediato</div>
+    <h1 style="font-size:clamp(1.9rem,5vw,3.2rem);margin-bottom:12px;">Creá tu contrato<br>de alquiler ahora</h1>
+    <!-- Precio visible arriba del fold -->
+    <div style="margin:0 auto 18px;text-align:center;">
+      <span style="font-family:'DM Mono',monospace;font-size:.82rem;color:var(--mist);">Desde </span>
+      <span style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--ink);">USD 6</span>
+      <span style="font-family:'DM Mono',monospace;font-size:.78rem;color:var(--mist);"> · Pago único · Descarga inmediata</span>
     </div>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:640px;margin:0 auto 16px;">
-      <a href="contrato-alquiler.html" class="btn gold" style="flex:1;min-width:220px;max-width:300px;font-weight:700;text-decoration:none;padding:15px;text-align:center;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.95rem;" onclick="trackCTA('hero_alquiler');">
-        Generar contrato de alquiler →
+    <!-- CTA principal -->
+    <div style="max-width:400px;margin:0 auto 14px;">
+      <a href="formulario.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:1.05rem;font-weight:800;padding:17px;border-radius:10px;box-shadow:0 6px 24px rgba(200,168,75,.3);" onclick="trackCTA('hero_formulario');">
+        Crear mi contrato ahora →
       </a>
-      <button class="btn" style="flex:1;min-width:180px;max-width:220px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);font-size:.88rem;" onclick="trackCTA('hero_otros');showSec('generador');">
+    </div>
+    <!-- Trust compacto -->
+    <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;">
+      <span class="badge green" style="font-size:.68rem;">✓ PDF listo para firmar</span>
+      <span class="badge" style="font-size:.68rem;">🔒 MercadoPago</span>
+      <span class="badge green" style="font-size:.68rem;">✓ Legislación argentina</span>
+      <span class="badge" style="font-size:.68rem;">Sin registro</span>
+    </div>
+    <!-- CTA secundario -->
+    <div style="text-align:center;">
+      <button class="btn" style="background:transparent;color:var(--mist);border:1px solid var(--line);font-size:.8rem;padding:9px 18px;width:auto;display:inline-block;" onclick="trackCTA('hero_otros');showSec('generador');">
         Otros documentos →
       </button>
     </div>
-    <p style="margin:0;font-size:.76rem;color:var(--mist);font-family:'DM Mono',monospace;">
-      Desde <strong style="color:var(--ink);">USD 6</strong> · Pago único · Sin suscripción · Cientos de contratos generados
-    </p>
   </div>
 
-  <div class="content-wrap">
-    <div class="sec-label">¿Cómo funciona?</div>
-    <div class="sec-title">De la idea al documento<br>en 4 pasos simples</div>
-
-    <div class="steps-how">
-      <div class="step-how">
-        <div class="step-num">01</div>
-        <div class="step-title">Describí qué necesitás</div>
-        <div class="step-desc">Escribí el tipo de documento o elegí entre las opciones frecuentes. Podés ser específico: "alquiler temporario en Mendoza".</div>
+  <!-- Pasos: 3 íconos compactos -->
+  <div style="max-width:580px;margin:0 auto;padding:0 24px 40px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;">
+      <div style="padding:14px 10px;text-align:center;border-right:1px solid var(--line);">
+        <div style="font-size:1.2rem;margin-bottom:4px;">📝</div>
+        <div style="font-size:.75rem;font-weight:600;color:var(--ink);">Completás datos</div>
+        <div style="font-size:.68rem;color:var(--mist);">2 min</div>
       </div>
-      <div class="step-how">
-        <div class="step-num">02</div>
-        <div class="step-title">La IA arma el formulario</div>
-        <div class="step-desc">Claude AI analiza el documento y genera los campos exactos que necesita, adaptados a la legislación del país y provincia indicados.</div>
+      <div style="padding:14px 10px;text-align:center;border-right:1px solid var(--line);">
+        <div style="font-size:1.2rem;margin-bottom:4px;">🔒</div>
+        <div style="font-size:.75rem;font-weight:600;color:var(--ink);">Pagás con MP</div>
+        <div style="font-size:.68rem;color:var(--mist);">Seguro</div>
       </div>
-      <div class="step-how">
-        <div class="step-num">03</div>
-        <div class="step-title">Completás los datos</div>
-        <div class="step-desc">Completás un formulario claro y guiado. Cada campo tiene un ejemplo orientativo. Sin tecnicismos, sin confusión.</div>
-      </div>
-      <div class="step-how">
-        <div class="step-num">04</div>
-        <div class="step-title">Pagás y descargás</div>
-        <div class="step-desc">Pago seguro con MercadoPago. El documento se genera al instante y se descarga como PDF directo en tu dispositivo.</div>
+      <div style="padding:14px 10px;text-align:center;">
+        <div style="font-size:1.2rem;margin-bottom:4px;">📄</div>
+        <div style="font-size:.75rem;font-weight:600;color:var(--ink);">Descargás PDF</div>
+        <div style="font-size:.68rem;color:var(--mist);">Inmediato</div>
       </div>
     </div>
-
-    <div style="text-align:center;margin-top:48px;">
-      <button class="btn gold" style="max-width:300px;margin:0 auto;font-weight:700;" onclick="trackCTA('how_cta');showSec('generador');">
-        Crear mi documento ahora →
-      </button>
-      <p style="margin-top:16px;font-size:.78rem;color:var(--mist);font-family:'DM Mono',monospace;">
-        ¿Generás documentos seguido?
-        <a href="planes.html" style="color:var(--gold);cursor:pointer;">Conocé el plan ilimitado →</a>
-      </p>
-    </div>
+    <p style="text-align:center;margin-top:14px;font-size:.74rem;color:var(--mist);font-family:'DM Mono',monospace;">
+      ¿Generás documentos seguido? <a href="planes.html" style="color:var(--gold);">Plan ilimitado →</a>
+    </p>
   </div>
 </div>
 
@@ -623,8 +622,9 @@ footer a:hover{color:var(--gold);}
 
     <!-- CARD 1 -->
     <div class="card visible" id="card1">
-      <div class="card-title">Elegí o describí el documento</div>
-      <div class="card-sub">Podés escribir directamente qué necesitás, o hacer click en una opción frecuente de abajo para empezar rápido.</div>
+      <!-- Trust bar arriba del fold del generador -->
+      <div class="card-title">¿Qué documento necesitás?</div>
+      <div class="card-sub">Escribí o elegí. El formulario se arma en segundos.</div>
 
       <input class="doc-big" type="text" id="docInput"
         placeholder="Ej: contrato de alquiler de local comercial, NDA para startup, carta de renuncia...">
@@ -672,7 +672,7 @@ footer a:hover{color:var(--gold);}
       </div>
 
       <div class="alert err" id="alert1"></div>
-      <button class="btn" onclick="generarFormulario()">Continuar — generar formulario →</button>
+      <button class="btn gold" style="font-weight:800;font-size:1rem;" onclick="track('click_generar');irAFormulario()">Generar formulario ahora →</button>
     </div>
 
     <!-- LOADING FORM -->
@@ -1557,7 +1557,26 @@ function ocultarStickyMobile() {
   if (sticky) sticky.classList.remove('visible');
 }
 
+// Smart redirect: si es alquiler, va directo a formulario.html (ya optimizado)
+function irAFormulario() {
+  const doc = (document.getElementById('docInput')?.value || '').toLowerCase();
+  if (doc.includes('alquiler') || doc.includes('locacion') || doc.includes('locación')) {
+    trackCTA('redirect_formulario');
+    window.location.href = 'formulario.html';
+    return;
+  }
+  generarFormulario();
+}
+
 // ── trackCTA: wrapper para CTAs de landing ────────────────────────
+// Sticky mobile hero
+(function(){
+  if(window.innerWidth < 720) {
+    const s = document.getElementById('hero-sticky-mobile');
+    if(s) s.style.display = 'block';
+  }
+})();
+
 function trackCTA(boton) {
   // Solo tracking de interacción, NO conversión (conversión solo se dispara en gracias.html)
   try {
@@ -1579,6 +1598,17 @@ function track(tipo, extra) {
   } catch(_) {}
 }
 track('page_view');
+
+// Tracking granular de scroll
+(function(){
+  const milestones = {25:false,50:false,75:false};
+  window.addEventListener('scroll', function() {
+    const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    [25,50,75].forEach(m => {
+      if(!milestones[m] && pct >= m) { milestones[m]=true; track('scroll_'+m+'pct'); }
+    });
+  }, {passive:true});
+})();
 
 const CATEGORIAS = {
   contratos: {
@@ -1981,6 +2011,7 @@ async function generarFormulario() {
     requestAnimationFrame(() => requestAnimationFrame(() => {
       engacharPreviewListeners();
     }));
+    track('inicio_formulario', { doc_tipo: G.tipo });
   } catch(err) {
     document.getElementById('loadingForm').classList.remove('visible');
     document.getElementById('card1').classList.add('visible');
@@ -2673,6 +2704,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
+  // Autocompletar si venimos de gracias.html con sugerencia
+  try {
+    const sug = sessionStorage.getItem('legalai_sugerencia');
+    if (sug) { const inp = document.getElementById('docInput'); if(inp) inp.value = sug; sessionStorage.removeItem('legalai_sugerencia'); }
+  } catch(_) {}
   // Capturar UTMs, gclid y device al cargar
   (function(){var p=new URLSearchParams(window.location.search);['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid'].forEach(function(k){var v=p.get(k);if(v)sessionStorage.setItem('legalai_'+k,v);});sessionStorage.setItem('legalai_device',/mobile|android|iphone|ipad/i.test(navigator.userAgent)?'Mobile':'Desktop');})();
   const t = localStorage.getItem('theme') || 'system';

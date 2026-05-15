@@ -143,16 +143,19 @@ footer a:hover{color:var(--gold)}
 <div class="wrap">
 
   <div class="intro">
-    <div class="intro-tag">// Contrato de alquiler · Argentina</div>
-    <h1>Completá los datos<br>y ves tu contrato gratis</h1>
-    <p class="intro-sub"><strong>No necesitás pagar para ver el resultado.</strong><br>Pagás solo si te sirve el documento.</p>
+    <div class="intro-tag">Contrato de alquiler · Argentina 2025</div>
+    <h1>Completá los datos<br>y pagá con <strong style="color:var(--gold)">MercadoPago</strong></h1>
+    <p class="intro-sub">PDF listo para firmar. Entrega inmediata. Sin abogados.</p>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <span style="background:var(--gold-dim);border:1px solid rgba(200,168,75,.2);color:var(--gold);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;font-weight:700;">USD 11</span>
+      <span style="background:var(--sage-dim);border:1px solid rgba(61,90,70,.15);color:var(--sage);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;">🔒 Pago seguro</span>
+      <span style="background:var(--cream);border:1px solid var(--line);color:var(--mist);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;">⚡ Descarga inmediata</span>
+    </div>
   </div>
 
   <div class="progress">
     <div class="prog-step active" id="ps1"><div class="prog-dot">1</div><div class="prog-lbl">Datos</div></div>
-    <div class="prog-step"        id="ps2"><div class="prog-dot">2</div><div class="prog-lbl">Ver</div></div>
-    <div class="prog-step"        id="ps3"><div class="prog-dot">3</div><div class="prog-lbl">Pagar</div></div>
-    <div class="prog-step"        id="ps4"><div class="prog-dot">4</div><div class="prog-lbl">PDF</div></div>
+    <div class="prog-step"        id="ps4"><div class="prog-dot">2</div><div class="prog-lbl">PDF listo</div></div>
   </div>
 
   <!-- CARD 1: FORMULARIO -->
@@ -167,17 +170,17 @@ footer a:hover{color:var(--gold)}
     <div class="sec-div"><span>Partes</span></div>
     <div class="field">
       <label class="field-label" for="propietario">Propietario <span class="req">*</span></label>
-      <input type="text" id="propietario" placeholder="Nombre y apellido completo">
+      <input type="text" id="propietario" placeholder="Nombre y apellido completo" autocomplete="name">
     </div>
     <div class="field">
       <label class="field-label" for="inquilino">Inquilino <span class="req">*</span></label>
-      <input type="text" id="inquilino" placeholder="Nombre y apellido completo">
+      <input type="text" id="inquilino" placeholder="Nombre y apellido completo" autocomplete="name">
     </div>
 
     <div class="sec-div"><span>Propiedad</span></div>
     <div class="field">
       <label class="field-label" for="direccion">Dirección del inmueble <span class="req">*</span></label>
-      <input type="text" id="direccion" placeholder="Ej: Av. Corrientes 1234, 3° B">
+      <input type="text" id="direccion" placeholder="Ej: Av. Corrientes 1234, 3° B" autocomplete="street-address">
     </div>
     <div class="field-row">
       <div class="field">
@@ -227,16 +230,12 @@ footer a:hover{color:var(--gold)}
       <textarea id="observaciones" rows="3" placeholder="Condiciones adicionales que quieras incluir..."></textarea>
     </div>
 
-    <button class="btn-main btn-gold" id="btnPagarDirecto" onclick="pagarDirecto()" style="margin-bottom:8px;">
-      Crear mi contrato ahora →
+    <button class="btn-main btn-gold" id="btnPagarDirecto" onclick="pagarDirecto()" style="margin-bottom:6px;font-size:1.05rem;font-weight:800;padding:17px;">
+      Pagar con MercadoPago — USD 11 →
     </button>
-    <button class="btn-ghost" id="btnGenerar" onclick="generarContrato()" style="font-size:.85rem;opacity:.8;margin-bottom:0;">
-      Ver vista previa antes de pagar (gratis)
-    </button>
-    <div class="promesa">
-      <div class="promesa-item">✓ Tu contrato se genera luego del pago</div>
-      <div class="promesa-item">✓ PDF listo para firmar</div>
-      <div class="promesa-item">✓ Pago único, sin suscripción</div>
+    <div class="promesa" style="margin-top:8px;">
+      <div class="promesa-item">Descarga inmediata · PDF listo para firmar</div>
+      <div class="promesa-item">Pago único · Sin registro · Sin suscripción</div>
     </div>
   </div><!-- /form-col -->
 
@@ -268,35 +267,7 @@ footer a:hover{color:var(--gold)}
     <div class="loading-lbl">Generando tu contrato con IA...</div>
   </div>
 
-  <!-- CARD 2: PREVIEW -->
-  <div class="card" id="card2">
-    <div class="card-title">Tu contrato está listo</div>
-    <div class="card-sub">Leelo completo. Si te sirve, pagás y descargás el PDF.</div>
-    <div class="alert grn visible">✔ Contrato generado · Revisá antes de pagar</div>
-    <div class="alert err" id="alertForm2" style="margin-bottom:12px;"></div>
-    <div class="preview-box">
-      <canvas id="previewCanvas"></canvas>
-      <div id="previewWatermarkOverlay"></div>
-    </div>
-    <div class="precio-box">
-      <div>
-        <div class="precio-box-lbl">Contrato de alquiler</div>
-        <div class="precio-box-sub">PDF listo para firmar · pago único</div>
-      </div>
-      <div>
-        <div class="precio-box-amt" id="precioAmt">$ —</div>
-        <div class="precio-box-det" id="precioDet">cargando…</div>
-      </div>
-    </div>
-    <p style="font-size:.83rem;color:var(--mist);text-align:center;margin-bottom:10px;font-weight:500">Pagás solo si te sirve el documento</p>
-    <button class="btn-main btn-gold" onclick="pagar()">PAGAR Y DESCARGAR PDF</button>
-    <div class="promesa" style="margin-top:12px">
-      <div class="promesa-item">Pago seguro con MercadoPago</div>
-      <div class="promesa-item">Descarga inmediata tras el pago</div>
-      <div class="promesa-item">Modelo orientativo · no reemplaza abogado</div>
-    </div>
-    <button class="btn-ghost" onclick="volverForm()">← Editar datos</button>
-  </div>
+
 
   <!-- LOADING pago / doc -->
   <div class="loading" id="loadingPago">
@@ -379,11 +350,11 @@ function renderPrecio(){
 }
 
 // Progress
-function setProgress(step){[1,2,3,4].forEach(i=>{const el=document.getElementById('ps'+i);el.classList.remove('active','done');if(i<step)el.classList.add('done');if(i===step)el.classList.add('active');});}
+function setProgress(step){[1,4].forEach(i=>{const el=document.getElementById('ps'+i);if(!el)return;el.classList.remove('active','done');if(i<step)el.classList.add('done');if(i===step)el.classList.add('active');});}
 
 // Paneles
 function showPanel(id){
-  ['card1','card2','card4','loadingGen','loadingPago','loadingDoc'].forEach(x=>{const el=document.getElementById(x);if(el){el.classList.remove('visible');el.style.display='';}});
+  ['card1','card4','loadingGen','loadingPago','loadingDoc'].forEach(x=>{const el=document.getElementById(x);if(el){el.classList.remove('visible');el.style.display='';}});
   const t=document.getElementById(id);if(!t)return;
   if(id.startsWith('loading'))t.style.display='block';else t.classList.add('visible');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -425,9 +396,8 @@ async function generarContrato(){
     sessionStorage.removeItem('legalai_previewId');
     track('preview_fallback', { doc_tipo: DOC_TIPO, error: (err.message||'').slice(0,80) });
     // Mostrar preview vacío con mensaje y avanzar al pago
-    renderizarPreviewFallback();
-    showPanel('card2'); setProgress(2);
-    showErr('alertForm2','⚠️ No pudimos generar la vista previa, pero podés continuar al pago — el contrato se genera correctamente luego del pago.');
+    // Card2 eliminada — ir directo al pago
+    await pagar();
   }
 }
 
@@ -507,6 +477,15 @@ function actualizarPreviewFormulario() {
 }
 
 // Enganchar a todos los inputs del formulario
+// Tracking granular scroll en formulario
+(function(){
+  const milestones = {50:false,100:false};
+  window.addEventListener('scroll', function(){
+    const pct = Math.round((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100);
+    [50,100].forEach(m => { if(!milestones[m]&&pct>=m){milestones[m]=true;track('scroll_form_'+m+'pct');} });
+  },{passive:true});
+})();
+
 function initPreviewFormulario() {
   const campos = ['propietario','inquilino','garante','direccion','ciudad','provincia',
                   'monto','duracion','fecha_inicio','observaciones'];

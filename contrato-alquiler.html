@@ -187,7 +187,7 @@ footer span{font-size:.75rem;color:rgba(255,255,255,.35)}
       <button class="theme-btn" id="btnSystem" onclick="setTheme('system')" style="padding:4px 10px;border-radius:14px;border:none;background:transparent;cursor:pointer;font-size:.68rem;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace">⊙ Auto</button>
       <button class="theme-btn" id="btnDark"   onclick="setTheme('dark')" style="padding:4px 10px;border-radius:14px;border:none;background:transparent;cursor:pointer;font-size:.68rem;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace">◗ Oscuro</button>
     </div>
-    <a href="formulario.html" style="background:var(--gold);color:#0a0a0a;font-weight:700;font-size:.82rem;padding:9px 20px;border-radius:8px;text-decoration:none;">Crear contrato ahora →</a>
+    <a href="formulario.html" style="background:var(--gold);color:#0a0a0a;font-weight:700;font-size:.82rem;padding:9px 20px;border-radius:8px;text-decoration:none;">Crear contrato — USD 11 →</a>
   </div>
 </nav>
 
@@ -204,18 +204,16 @@ footer span{font-size:.75rem;color:rgba(255,255,255,.35)}
     <div class="hero-check">Contrato legal válido en Argentina</div>
     <div class="hero-check">Listo en 5 minutos</div>
     <div class="hero-check">Descarga inmediata en PDF</div>
-    <div class="hero-check">Vista previa antes de pagar</div>
+    <div class="hero-check">Preview instantáneo mientras completás</div>
   </div>
 
-  <h1>Contrato de alquiler personalizado<br>listo para firmar en <mark>5 minutos</mark></h1>
-  <p style="font-size:.95rem;color:var(--txt-muted);max-width:520px;margin:0 auto 16px;line-height:1.65;font-weight:400;">Completás los datos, lo revisás y descargás el PDF. Sin abogado, sin turnos, sin esperas. Adaptado a tu provincia y a la Ley 27.551.</p>
-  <p class="hero-sub">Completás los datos y <strong>ves el contrato completo gratis</strong>.<br>Pagás solo si te sirve.</p>
+  <h1>Contrato de alquiler<br>listo en <mark>2 minutos</mark></h1>
+  <p style="font-size:.95rem;color:var(--txt-muted);max-width:480px;margin:0 auto 14px;line-height:1.6;font-weight:400;">Completás los datos, pagás y descargás el PDF. Sin abogados. Pago único.</p>
+  <p class="hero-sub">Completás los datos, ves el preview instantáneo y pagás.<br><strong>PDF listo para firmar en menos de 2 minutos.</strong></p>
 
-  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;">
-    <span style="font-size:.75rem;color:var(--txt-muted);font-family:'DM Mono',monospace;">✓ Ley 27.551 vigente</span>
-    <span style="font-size:.75rem;color:var(--txt-muted);font-family:'DM Mono',monospace;">✓ PDF listo para imprimir</span>
-    <span style="font-size:.75rem;color:var(--txt-muted);font-family:'DM Mono',monospace;">✓ Sin registro</span>
-    <span style="font-size:.75rem;color:var(--txt-muted);font-family:'DM Mono',monospace;">✓ Pago único</span>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
+    <span style="background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.2);color:var(--gold,#c9a84c);font-family:'DM Mono',monospace;font-size:.72rem;padding:4px 12px;border-radius:20px;font-weight:700;">USD 11 · Pago único</span>
+    <span style="font-size:.74rem;color:var(--txt-muted);font-family:'DM Mono',monospace;padding:4px 0;">🔒 MercadoPago · ⚡ PDF inmediato · ✓ Sin registro</span>
   </div>
   <div class="precio-pill">
     <span style="font-size:.72rem;color:var(--txt-muted);font-family:'DM Mono',monospace;display:block;margin-bottom:2px">Desde</span>
@@ -229,8 +227,9 @@ footer span{font-size:.75rem;color:rgba(255,255,255,.35)}
   </p>
   <a class="btn-cta" href="formulario.html"
     onclick="fireConversion('hero_landing')">
-    Crear mi contrato de alquiler →
+    Crear mi contrato — USD 11 →
   </a>
+  <p style="font-size:.8rem;color:var(--txt-muted);margin-bottom:8px;">⏱ Listo en menos de 2 minutos · Sin abogado · Sin turnos</p>
   <div class="trust-line">
     <span>🔒 Pago seguro MercadoPago</span>
     <span>⚡ Generalo ahora · descargalo en minutos</span>
@@ -304,7 +303,7 @@ footer span{font-size:.75rem;color:rgba(255,255,255,.35)}
     <a class="btn-cta" href="formulario.html"
       onclick="fireConversion('precio_landing')"
       style="display:block;width:100%">
-      Crear mi contrato de alquiler →
+      Crear mi contrato — USD 11 →
     </a>
     <div class="nota">🔒 Pago seguro MercadoPago · Pagás solo si te sirve · Sin costos ocultos</div>
   </div>
@@ -361,7 +360,7 @@ footer span{font-size:.75rem;color:rgba(255,255,255,.35)}
   <a class="btn-cta" href="formulario.html"
     onclick="fireConversion('cta_final_landing')"
     style="font-size:1rem;padding:16px 40px">
-    Crear mi contrato de alquiler →
+    Crear mi contrato — USD 11 →
   </a>
   <p style="margin-top:14px;font-size:.75rem;color:rgba(255,255,255,.35)">
     Generalo ahora · descargalo en minutos · modelo orientativo
@@ -490,5 +489,13 @@ window.addEventListener('load', async function() {
   </div>
 </div>
 
+<div style="display:none;position:fixed;bottom:0;left:0;right:0;padding:10px 16px 20px;background:linear-gradient(to top,var(--bg,#f7f3ec) 85%,transparent);z-index:200;" id="sticky-alq">
+  <a href="formulario.html" class="btn-cta" style="display:block;text-align:center;text-decoration:none;font-size:.92rem;font-weight:800;padding:14px;" onclick="fireConversion('sticky_alquiler')">
+    Crear mi contrato — USD 11 →
+  </a>
+</div>
+<script>
+if(window.innerWidth<720){var s=document.getElementById('sticky-alq');if(s)s.style.display='block';}
+</script>
 </body>
 </html>

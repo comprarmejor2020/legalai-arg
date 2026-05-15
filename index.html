@@ -529,12 +529,12 @@ footer a:hover{color:var(--gold);}
 
 <!-- NAV -->
 <nav>
-  <div class="nav-link active" onclick="showSec('inicio')">Inicio</div>
-  <div class="nav-link"        onclick="trackCTA('nav_generador');showSec('generador');">Generador</div>
-  <div class="nav-link"        onclick="window.location.href='formulario.html'">Contrato de alquiler</div>
-  <div class="nav-link"        onclick="window.location.href='planes.html'">Plan ilimitado</div>
-  <div class="nav-link"        onclick="showSec('afiliados')">Afiliados</div>
-  <div class="nav-link"        onclick="showSec('about')">Acerca de</div>
+  <div class="nav-link active" data-sec="inicio"    onclick="showSec('inicio')">Inicio</div>
+  <div class="nav-link"        data-sec="generador" onclick="trackCTA('nav_generador');showSec('generador');">Generador</div>
+  <div class="nav-link"        data-sec=""          onclick="window.location.href='contrato-alquiler.html'">Contrato alquiler</div>
+  <div class="nav-link"        data-sec=""          onclick="window.location.href='planes.html'">Plan ilimitado</div>
+  <div class="nav-link"        data-sec="afiliados" onclick="showSec('afiliados')">Afiliados</div>
+  <div class="nav-link"        data-sec="about"     onclick="showSec('about')">Acerca de</div>
 </nav>
 
 
@@ -543,23 +543,23 @@ footer a:hover{color:var(--gold);}
 
   <!-- STICKY CTA MOBILE — visible siempre en la hero -->
   <div id="hero-sticky-mobile" style="display:none;position:fixed;bottom:0;left:0;right:0;padding:10px 16px 20px;background:linear-gradient(to top,var(--paper) 80%,transparent);z-index:200;">
-    <a href="formulario.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:.95rem;font-weight:800;padding:15px;" onclick="trackCTA('sticky_hero');">
+    <a href="contrato-alquiler.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:.95rem;font-weight:800;padding:15px;" onclick="trackCTA('sticky_hero');">
       Crear contrato de alquiler ahora →
     </a>
   </div>
 
   <div class="hero" style="padding-bottom:32px;">
     <div class="hero-tag">Argentina 2026 · Sin abogado · Descarga inmediata</div>
-    <h1 style="font-size:clamp(2rem,5vw,3.4rem);">Creá tu contrato de alquiler<br>en <em>2 minutos</em></h1>
+    <h1 style="font-size:clamp(2rem,5vw,3.4rem);">Creá tu documento legal<br>en <em>2 minutos</em></h1>
     <p style="font-size:1.05rem;max-width:540px;margin-left:auto;margin-right:auto;">Completás los datos y descargás el PDF listo para firmar.<br>Sin esperas. Sin abogados. Sin complicaciones.</p>
 
     <!-- CTA PRINCIPAL — enorme, dominante -->
     <div style="margin:28px auto 16px;max-width:440px;">
-      <a href="formulario.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:1.1rem;font-weight:800;padding:18px 24px;border-radius:10px;box-shadow:0 6px 24px rgba(200,168,75,.35);" onclick="trackCTA('hero_alquiler');">
-        Crear mi contrato de alquiler →
+      <a href="contrato-alquiler.html" class="btn gold" style="display:block;text-align:center;text-decoration:none;font-size:1.1rem;font-weight:800;padding:18px 24px;border-radius:10px;box-shadow:0 6px 24px rgba(200,168,75,.35);" onclick="trackCTA('hero_alquiler');">
+        Crear mi contrato ahora →
       </a>
       <p style="text-align:center;font-size:.75rem;color:var(--mist);margin-top:8px;font-family:'DM Mono',monospace;">
-        Desde <strong style="color:var(--ink);">USD 6</strong> · Pago único · Descarga inmediata
+        Desde <strong style="color:var(--ink);" id="hero-precio-desde">$ —</strong> ARS · Pago único · Descarga inmediata
       </p>
     </div>
 
@@ -605,8 +605,8 @@ footer a:hover{color:var(--gold);}
     </div>
 
     <div style="text-align:center;">
-      <a href="formulario.html" class="btn gold" style="display:inline-block;max-width:340px;text-decoration:none;font-weight:800;font-size:1rem;padding:16px 28px;" onclick="trackCTA('how_cta');">
-        Crear contrato de alquiler →
+      <a href="contrato-alquiler.html" class="btn gold" style="display:inline-block;max-width:340px;text-decoration:none;font-weight:800;font-size:1rem;padding:16px 28px;" onclick="trackCTA('how_cta');">
+        Crear mi contrato →
       </a>
       <p style="margin-top:12px;font-size:.76rem;color:var(--mist);font-family:'DM Mono',monospace;">
         ¿Generás documentos seguido? <a href="planes.html" style="color:var(--gold);">Plan ilimitado →</a>
@@ -634,12 +634,12 @@ footer a:hover{color:var(--gold);}
 
     <!-- CARD 1 -->
     <div class="card visible" id="card1">
-      <!-- Trust bar + precio visible desde card1 -->
+      <!-- Trust bar arriba del fold del generador -->
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line);">
         <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">🔒 Pago seguro MP</span>
         <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">⚡ Descarga inmediata</span>
         <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">📄 PDF listo para firmar</span>
-        <span style="font-size:.72rem;color:var(--gold);font-family:'DM Mono',monospace;font-weight:700;">Desde USD 6 · pago único</span>
+        <span style="font-size:.72rem;color:var(--mist);font-family:'DM Mono',monospace;">✓ Desde <span id="card1-precio-desde">$ —</span> ARS</span>
       </div>
       <div class="card-title">¿Qué documento necesitás?</div>
       <div class="card-sub">Escribí o elegí el tipo de documento. El formulario se arma en segundos.</div>
@@ -805,6 +805,7 @@ footer a:hover{color:var(--gold);}
       <div class="alert err" id="alert3"></div>
       <button class="btn gold" id="btnPagar" onclick="(function(){fetch(CONFIG.WORKER_URL+'/interaccion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({boton:'pagar_mp',utm_src:sessionStorage.getItem('legalai_utm_source')||'',utm_cmp:sessionStorage.getItem('legalai_utm_campaign')||'',utm_med:sessionStorage.getItem('legalai_utm_medium')||''})}).catch(function(){});})();procesarPago()">Pagar con MercadoPago →</button>
       <button class="btn ghost" onclick="volver()">← Volver y editar datos</button>
+      <button class="btn ghost" style="margin-top:6px;font-size:.8rem;opacity:.7;" onclick="showSec('inicio');empezarDeNuevo();">⌂ Volver al inicio</button>
     </div>
 
     <!-- LOADING DOC -->
@@ -1692,21 +1693,20 @@ function renderSugerencias(cat) {
 let cotizacion = { valor: null, fuente: null };
 
 async function obtenerCotizacion() {
-  // BNA primero — precio en pesos con dólar oficial
-  try {
-    const r = await fetch('https://api.bluelytics.com.ar/v2/latest', { signal: AbortSignal.timeout(4000) });
-    const d = await r.json();
-    if (d && d.official && d.official.value_sell > 0) { cotizacion = { valor: d.official.value_sell, fuente: 'BNA' }; return cotizacion; }
-  } catch(_) {}
-  try {
-    const r = await fetch('https://dolarapi.com/v1/dolares/oficial', { signal: AbortSignal.timeout(4000) });
-    const d = await r.json();
-    if (d && d.venta && d.venta > 0) { cotizacion = { valor: d.venta, fuente: 'BNA' }; return cotizacion; }
-  } catch(_) {}
   try {
     const r = await fetch('https://dolarapi.com/v1/dolares/bolsa', { signal: AbortSignal.timeout(4000) });
     const d = await r.json();
     if (d && d.venta && d.venta > 0) { cotizacion = { valor: d.venta, fuente: 'MEP' }; return cotizacion; }
+  } catch(_) {}
+  try {
+    const r = await fetch('https://dolarapi.com/v1/dolares/oficial', { signal: AbortSignal.timeout(4000) });
+    const d = await r.json();
+    if (d && d.venta && d.venta > 0) { cotizacion = { valor: d.venta, fuente: 'Oficial' }; return cotizacion; }
+  } catch(_) {}
+  try {
+    const r = await fetch('https://api.bluelytics.com.ar/v2/latest', { signal: AbortSignal.timeout(4000) });
+    const d = await r.json();
+    if (d && d.official && d.official.value_sell > 0) { cotizacion = { valor: d.official.value_sell, fuente: 'BNA' }; return cotizacion; }
   } catch(_) {}
   cotizacion = { valor: null, fuente: null };
   return cotizacion;
@@ -1878,20 +1878,11 @@ function showSec(name, _anchor) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   document.getElementById('sec-' + name).classList.add('visible');
-  const secs = ['inicio','generador','suscripcion','afiliados','about'];
-  const idx = secs.indexOf(name);
-  if (idx >= 0) document.querySelectorAll('.nav-link')[idx].classList.add('active');
-  if (name === 'generador') {
-    track('cta_generador');
-    // Si viene del nav de alquiler, preseleccionar contrato de alquiler
-    if (sessionStorage.getItem('legalai_open_generador') === '1') {
-      sessionStorage.removeItem('legalai_open_generador');
-      setTimeout(() => {
-        const inp = document.getElementById('docInput');
-        if(inp && !inp.value) inp.value = 'Contrato de alquiler de vivienda';
-      }, 100);
-    }
-  }
+  // Activar nav-link por data-sec (evita bug de índice con links externos)
+  document.querySelectorAll('.nav-link[data-sec]').forEach(l => {
+    if (l.dataset.sec === name) l.classList.add('active');
+  });
+  if (name === 'generador') track('cta_generador');
   if (_anchor === 'aff-form') {
     requestAnimationFrame(() => {
       const el = document.getElementById('aff-form');
@@ -2044,8 +2035,17 @@ async function generarFormulario() {
 }
 
 function irAlPago() {
+  // Restaurar datos de G desde sessionStorage si están vacíos (ej: al volver de MP)
+  if (!G.tipo) {
+    try {
+      const metaStr = sessionStorage.getItem('legalai_meta');
+      const tituloStr = sessionStorage.getItem('legalai_titulo');
+      if (metaStr) { const m = JSON.parse(metaStr); G.precio_usd = m.precio_usd||8; G.upgrade_porcentaje = m.upgrade_porcentaje||40; G.categoria = m.categoria||'intermedio'; }
+      if (tituloStr) { G.tipo = tituloStr; if(!G.form) G.form = {titulo: tituloStr}; }
+    } catch(_) {}
+  }
   // Prepara card3 con precios y navega a ella
-  document.getElementById('priceDocName').textContent = G.form?.titulo || G.tipo;
+  document.getElementById('priceDocName').textContent = G.form?.titulo || G.tipo || sessionStorage.getItem('legalai_titulo') || '—';
   document.getElementById('priceDocDesc').textContent = G.pais + (G.provincia !== 'No especificada' ? ' · ' + G.provincia : '');
   if (G.codigoPack) {
     const elAmt  = document.getElementById('precioARS');
@@ -2726,6 +2726,18 @@ window.addEventListener('load', () => {
   (function(){var p=new URLSearchParams(window.location.search);['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid'].forEach(function(k){var v=p.get(k);if(v)sessionStorage.setItem('legalai_'+k,v);});sessionStorage.setItem('legalai_device',/mobile|android|iphone|ipad/i.test(navigator.userAgent)?'Mobile':'Desktop');})();
   const t = localStorage.getItem('theme') || 'system';
   applyTheme(t);
+
+  // Mostrar precio en ARS desde el inicio (precio mínimo USD 6)
+  obtenerCotizacion().then(cot => {
+    if (cot?.valor) {
+      const ars = Math.ceil(6 * cot.valor / 100) * 100;
+      const fmt = '$ ' + ars.toLocaleString('es-AR');
+      const el1 = document.getElementById('hero-precio-desde');
+      const el2 = document.getElementById('card1-precio-desde');
+      if (el1) el1.textContent = fmt;
+      if (el2) el2.textContent = fmt;
+    }
+  });
   ['Light','System','Dark'].forEach(x =>
     document.getElementById('btn'+x).classList.toggle('active', x.toLowerCase() === t)
   );
@@ -2812,10 +2824,10 @@ window.addEventListener('load', () => {
       if (paymentIdPack && cotStr) crearPackTrasRetornoMP(paymentIdPack, JSON.parse(cotStr));
     }
   } else if (stat === 'failure') {
-    showSec('generador'); showCard(3);
+    showSec('generador'); irAlPago(); // irAlPago restaura datos + muestra card3
     showErr('alert3', 'El pago fue rechazado. Intentá de nuevo o usá otro medio de pago.');
   } else if (stat === 'pending') {
-    showSec('generador'); showCard(3);
+    showSec('generador'); irAlPago();
     showErr('alert3', 'El pago está pendiente de acreditación. Te avisaremos cuando esté confirmado.');
   }
 });

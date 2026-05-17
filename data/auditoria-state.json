@@ -32,19 +32,24 @@
       "descripcion": "Reemplazar el botón/CTA del generador por un elemento visualmente prominente: cambiar texto a una propuesta de valor directa (ej: 'Crear mi documento ahora'), aumentar contraste y tamaño, moverlo above the fold si no lo está, y eliminar cualquier fricción visual o de scroll que impida verlo. Agregar evento de tracking explícito en el click para confirmar que el evento se dispara.",
       "fecha": "2026-05-14T12:27:29.168Z",
       "resultado_pendiente": true
+    },
+    {
+      "descripcion": "Investigar y corregir el fallo técnico en la generación del preview: revisar errores de consola JS, llamadas a API fallidas, timeouts, o estados bloqueantes al momento de generar. Si el fix técnico toma más de 1h, implementar bypass: al hacer click en el CTA redirigir directo al checkout sin requerir preview generado, mostrar mensaje 'Tu documento se preparará luego del pago'. Añadir log de error visible en frontend para detectar exactamente dónde falla el proceso.",
+      "fecha": "2026-05-17T12:00:50.250Z",
+      "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "NO_CAMBIAR",
-  "fecha": "2026-05-16T11:54:25.766Z",
-  "ultima_prioridad": "baja",
-  "ultimo_embudo": null,
+  "ultima_decision": "PROPONER_CAMBIO",
+  "fecha": "2026-05-17T12:00:50.250Z",
+  "ultima_prioridad": "alta",
+  "ultimo_embudo": "Genera preview",
   "cambio_activo": {
-    "descripcion": "Reemplazar el botón/CTA del generador por un elemento visualmente prominente: cambiar texto a una propuesta de valor directa (ej: 'Crear mi documento ahora'), aumentar contraste y tamaño, moverlo above the fold si no lo está, y eliminar cualquier fricción visual o de scroll que impida verlo. Agregar evento de tracking explícito en el click para confirmar que el evento se dispara.",
-    "archivo": "index.html",
-    "tipo": "cta",
-    "hipotesis": "Si el CTA del generador es más visible y tiene copy orientado a beneficio → los usuarios hacen click y avanzan en el funnel",
+    "descripcion": "Investigar y corregir el fallo técnico en la generación del preview: revisar errores de consola JS, llamadas a API fallidas, timeouts, o estados bloqueantes al momento de generar. Si el fix técnico toma más de 1h, implementar bypass: al hacer click en el CTA redirigir directo al checkout sin requerir preview generado, mostrar mensaje 'Tu documento se preparará luego del pago'. Añadir log de error visible en frontend para detectar exactamente dónde falla el proceso.",
+    "archivo": "generador.html",
+    "tipo": "flujo_pago",
+    "hipotesis": "Si se elimina el bloqueo en generación de preview o se hace bypass al checkout → usuarios que ya hacen click podrán avanzar y habrá al menos 1 pago en 48h",
     "conv_base": 0,
-    "clics_base": 6
+    "clics_base": 16
   },
-  "cambio_activo_desde": "2026-05-14T12:27:29.168Z"
+  "cambio_activo_desde": "2026-05-17T12:00:50.250Z"
 }

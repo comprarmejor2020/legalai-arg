@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-05-19T13:56:28.859Z",
+  "fecha": "2026-05-20T13:42:08.294Z",
   "periodo_48h": {
     "clics": 5,
     "ventas": 0,
@@ -17,13 +17,13 @@
     "ultimas_conversiones": []
   },
   "periodo_7d": {
-    "clics": 28,
+    "clics": 25,
     "ventas": 0,
     "tasa_conv": "0.0%",
     "total_ars": 0,
     "por_fuente": {
       "directo": {
-        "clics": 28,
+        "clics": 25,
         "ventas": 0,
         "tasa_conv": "0.0%",
         "monto_ars": 0
@@ -33,20 +33,16 @@
     "ultimas_conversiones": []
   },
   "embudo_eventos": {
-    "page_view": 13,
-    "scroll_form_100pct": 1,
-    "scroll_form_50pct": 3,
-    "registro_afiliado": 1,
-    "scroll_50pct": 2,
-    "scroll_25pct": 2,
-    "scroll_75pct": 1
+    "scroll_form_100pct": 2,
+    "scroll_form_50pct": 2,
+    "page_view": 5
   },
-  "total_eventos": 23,
+  "total_eventos": 9,
   "funnel_doc": [
     {
       "key": "page_view",
       "label": "Visita",
-      "count": 13,
+      "count": 5,
       "drop_pct": 0
     },
     {
@@ -84,14 +80,14 @@
     {
       "key": "page_view",
       "label": "Visita planes",
-      "count": 3,
+      "count": 0,
       "drop_pct": 0
     },
     {
       "key": "click_plan",
       "label": "Click plan",
       "count": 0,
-      "drop_pct": 100
+      "drop_pct": 0
     },
     {
       "key": "email_confirm",

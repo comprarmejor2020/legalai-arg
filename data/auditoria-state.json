@@ -42,19 +42,24 @@
       "descripcion": "Eliminar completamente el paso de generación de preview del flujo principal. Redirigir el CTA directo a la página de planes/checkout. El documento se genera post-pago de forma asíncrona. Remover cualquier dependencia JS bloqueante entre el CTA y el pago.",
       "fecha": "2026-05-19T13:56:28.859Z",
       "resultado_pendiente": true
+    },
+    {
+      "descripcion": "Auditar y corregir el flujo de checkout: verificar que el procesador de pagos esté activo y correctamente configurado, que no haya errores JS en el paso de confirmación, que los webhooks de pago respondan, y que el botón de pago final no esté bloqueado. Si hay un formulario de pago, reducirlo al mínimo (solo email + método de pago). Agregar feedback visual claro en cada paso del checkout.",
+      "fecha": "2026-05-21T14:15:42.969Z",
+      "resultado_pendiente": true
     }
   ],
-  "ultima_decision": "NO_CAMBIAR",
-  "fecha": "2026-05-20T13:42:08.293Z",
-  "ultima_prioridad": "baja",
-  "ultimo_embudo": null,
+  "ultima_decision": "PROPONER_CAMBIO",
+  "fecha": "2026-05-21T14:15:42.969Z",
+  "ultima_prioridad": "alta",
+  "ultimo_embudo": "Pago confirmado",
   "cambio_activo": {
-    "descripcion": "Eliminar completamente el paso de generación de preview del flujo principal. Redirigir el CTA directo a la página de planes/checkout. El documento se genera post-pago de forma asíncrona. Remover cualquier dependencia JS bloqueante entre el CTA y el pago.",
-    "archivo": "index.html",
+    "descripcion": "Auditar y corregir el flujo de checkout: verificar que el procesador de pagos esté activo y correctamente configurado, que no haya errores JS en el paso de confirmación, que los webhooks de pago respondan, y que el botón de pago final no esté bloqueado. Si hay un formulario de pago, reducirlo al mínimo (solo email + método de pago). Agregar feedback visual claro en cada paso del checkout.",
+    "archivo": "checkout.html",
     "tipo": "flujo_pago",
-    "hipotesis": "Si el preview deja de ser un paso requerido antes del pago → los usuarios llegan al checkout y se registran conversiones",
+    "hipotesis": "Si el checkout funciona sin errores técnicos y con mínima fricción → se obtienen las primeras conversiones pagas",
     "conv_base": 0,
-    "clics_base": 5
+    "clics_base": 17
   },
-  "cambio_activo_desde": "2026-05-19T13:56:28.859Z"
+  "cambio_activo_desde": "2026-05-21T14:15:42.969Z"
 }
